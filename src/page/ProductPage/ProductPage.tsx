@@ -1,14 +1,43 @@
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
-import SelectInput from '../../component/Input/SelectInput';
 import { InputWrap } from '../../style/input';
 import mockData from './mock.json';
 
 const ProductPage = () => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const { register, handleSubmit, getValues } = useForm();
+  const onSubmit = () => {
+    const requestBody = {
+      options: [
+        {
+          optionName: '누적 판매수',
+          isActive: getValues('options.option1'),
+        },
+        {
+          optionName: '실시간 조회수',
+          isActive: getValues('options.option2'),
+        },
+        {
+          optionName: '별점',
+          isActive: getValues('options.option3'),
+        },
+        {
+          optionName: '당일 판매수',
+          isActive: getValues('options.option4'),
+        },
+        {
+          optionName: '리뷰 글+날짜+프로필이미지+닉네임',
+          isActive: getValues('options.option5'),
+        },
+        {
+          optionName: '누적 리뷰 개수',
+          isActive: getValues('options.option6'),
+        },
+      ],
+      displayReviewCount: getValues('displayReviewCount'),
+      displayTime: getValues('displayTime'),
+    };
+    console.log(requestBody);
   };
 
   return (
@@ -21,46 +50,44 @@ const ProductPage = () => {
           <h3>노출할 정보</h3>
           <GridBox>
             <label>
-              <input type='checkbox' />
+              <input type='checkbox' {...register('options.option1')} />
               누적 판매수
             </label>
             <label>
-              <input type='checkbox' />
+              <input type='checkbox' {...register('options.option2')} />
               실시간 조회수
             </label>
             <label>
-              <input type='checkbox' />
+              <input type='checkbox' {...register('options.option3')} />
               별점
             </label>
             <label>
-              <input type='checkbox' />
+              <input type='checkbox' {...register('options.option4')} />
               당일 판매수
             </label>
             <label>
-              <input type='checkbox' />
+              <input type='checkbox' {...register('options.option5')} />
               리뷰 글+날짜+프로필이미지+닉네임
             </label>
             <label>
-              <input type='checkbox' />
+              <input type='checkbox' {...register('options.option6')} />
               누적 리뷰 개수
             </label>
           </GridBox>
           <InputWrap>
             <div>
               <h3>노출할 리뷰 개수</h3>
-              <SelectInput
-                id='reviewCount'
-                {...{ register }}
-                options={[{ name: '카테고리2', value: 'category2' }]}
-              />
+              <select {...register('displayReviewCount', { valueAsNumber: true })}>
+                <option value=''>선택</option>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+              </select>
             </div>
             <div>
               <h3>노출할 시간</h3>
-              <SelectInput
-                id='reviewCount'
-                {...{ register }}
-                options={[{ name: '카테고리2', value: 'category2' }]}
-              />
+              <select {...register('displayTime', { valueAsNumber: true })}>
+                <option value=''>선택</option>
+              </select>
             </div>
           </InputWrap>
           <h3>리뷰 관리</h3>
@@ -71,7 +98,7 @@ const ProductPage = () => {
         <div>미리보기</div>
       </FlexBox>
       <FixedBox>
-        <Button size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
+        <Button type='submit' size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
           ESL에 반영
         </Button>
       </FixedBox>
