@@ -15,6 +15,7 @@ export interface ProductListResponse {
 export interface ProductListItem {
   id: string;
   productCode: string;
+  productImageUrl: string;
   name: string;
   category: string;
   subCategory: string;
@@ -26,6 +27,7 @@ export interface ProductListItem {
 export interface ProductListItemResponse {
   id: number;
   productCode: string;
+  productImageUrl: string;
   name: string;
   category: string;
   subCategory: string;
@@ -60,9 +62,9 @@ export interface ReviewUpdateRequest {
 }
 
 export interface ReviewListRequest {
-  status: string;
-  searchKeyword: string;
-  type: string;
+  keyword: string;
+  type?: string;
+  isVisible: boolean;
   cursor?: string;
   size: number;
 }
@@ -78,9 +80,9 @@ export interface ReviewDetail {
   profileImageUrl: string;
   userName: string;
   content: string;
-  reviewData: string;
+  reviewDate: string;
   imageUrls: string[];
-  status: string;
+  visible: boolean;
 }
 
 export interface ReviewSummaryListResponse {

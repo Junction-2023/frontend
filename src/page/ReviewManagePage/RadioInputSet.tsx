@@ -1,13 +1,16 @@
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 
-interface ReviewRadioSet {}
+interface ReviewRadioSet {
+  register: UseFormRegister<FieldValues>;
+}
 
-const ReviewRadioSet = () => {
+const ReviewRadioSet = ({register}: ReviewRadioSet) => {
   return (
     <CheckBoxList>
-      <input type='radio' id='option1' name='options' defaultChecked />
+      <input type='radio' id='option1' {...register('options') } value="option1"  name='options' defaultChecked />
       <Label htmlFor='option1'>Displayed</Label>
-      <input type='radio' id='option2' name='options' />
+      <input type='radio' id='option2' {...register('options') } value="option2" name='options' />
       <Label htmlFor='option2'>Concealed</Label>
     </CheckBoxList>
   );
