@@ -24,7 +24,7 @@ export interface ProductListItem {
   averageStarRating: number;
 }
 
-export interface ProductListItemResponse {
+export interface ProductDetailResponse {
   id: number;
   productCode: string;
   productImageUrl: string;
@@ -80,13 +80,13 @@ export interface ReviewDetail {
   profileImageUrl: string;
   userName: string;
   content: string;
-  reviewDate: string;
+  reviewDate: string[];
   imageUrls: string[];
   visible: boolean;
 }
 
 export interface ReviewSummaryListResponse {
-  reviewSummary: ReviewSummaryListItem[];
+  reviewSummaries: ReviewSummaryListItem[];
   productName: string;
 }
 

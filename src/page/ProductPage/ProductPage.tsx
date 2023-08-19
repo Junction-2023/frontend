@@ -11,7 +11,7 @@ import { Subtitle1 } from '../../component/Typography/Subtitle';
 import { Title4 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { color } from '../../style/theme';
-import { ProductDetailUpdateRequest, ProductListItemResponse } from '../../types/api';
+import { ProductDetailUpdateRequest, ProductDetailResponse } from '../../types/api';
 
 interface IUpdateProductDetail {
   productId: string;
@@ -22,7 +22,7 @@ const ProductPage = () => {
   const { register, handleSubmit, watch } = useForm();
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
-  const { data, refetch } = useQuery<ProductListItemResponse>(['product', productId], () =>
+  const { data, refetch } = useQuery<ProductDetailResponse>(['product', productId], () =>
     getProductDetail(productId!!),
   );
   const { mutate } = useMutation(
