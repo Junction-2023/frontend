@@ -17,7 +17,7 @@ export const ProductReviewPage = () => {
     return null;
   }
 
-  const [reviewListRequest, setReviewListRequest] = useState({
+  const [reviewListRequest] = useState({
     keyword: '',
     size: 10,
     isVisible: true,
