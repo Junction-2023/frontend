@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import SearchInput from '../../component/Input/SearchInput';
 import SelectInput from '../../component/Input/SelectInput';
-import { InputBox, InputWrap } from '../../style/input';
+import { InputWrap } from '../../style/input';
 import mockData from './mock.json';
 
 const MainPage = () => {
@@ -11,20 +11,16 @@ const MainPage = () => {
     <>
       <SearchInput id='productId' {...{ register }} search={() => {}} />
       <InputWrap width='300px'>
-        <InputBox>
-          <SelectInput
-            id='category1'
-            {...{ register }}
-            options={[{ name: '카테고리1', value: 'category1' }]}
-          />
-        </InputBox>
-        <InputBox>
-          <SelectInput
-            id='category2'
-            {...{ register }}
-            options={[{ name: '카테고리2', value: 'category2' }]}
-          />
-        </InputBox>
+        <SelectInput
+          id='category1'
+          {...{ register }}
+          options={[{ name: '카테고리1', value: 'category1' }]}
+        />
+        <SelectInput
+          id='category2'
+          {...{ register }}
+          options={[{ name: '카테고리2', value: 'category2' }]}
+        />
       </InputWrap>
 
       <table>

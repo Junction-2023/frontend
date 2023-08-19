@@ -1,5 +1,6 @@
 import { FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
+import { InputBox } from '../../style/input';
 
 export type SelectInputType = {
   id: string;
@@ -26,20 +27,22 @@ function SelectInput({
   register,
 }: SelectInputType) {
   return (
-    <SelectDiv
-      id={id}
-      {...register(id, { ...optionSetting })}
-      defaultValue={defaultOptionValue}
-      disabled={disabled}
-      required={required}
-    >
-      {defaultOption && <option value={defaultOption.value}>{defaultOption.name}</option>}
-      {options.map((item) => (
-        <option key={item.value} value={item.value}>
-          {item.name}
-        </option>
-      ))}
-    </SelectDiv>
+    <InputBox>
+      <SelectDiv
+        id={id}
+        {...register(id, { ...optionSetting })}
+        defaultValue={defaultOptionValue}
+        disabled={disabled}
+        required={required}
+      >
+        {defaultOption && <option value={defaultOption.value}>{defaultOption.name}</option>}
+        {options.map((item) => (
+          <option key={item.value} value={item.value}>
+            {item.name}
+          </option>
+        ))}
+      </SelectDiv>
+    </InputBox>
   );
 }
 
