@@ -6,9 +6,13 @@ import { InputWrap } from '../../style/input';
 import mockData from './mock.json';
 
 const ProductPage = () => {
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FlexBox>
         <div>
           <h2>
@@ -71,7 +75,7 @@ const ProductPage = () => {
           ESL에 반영
         </Button>
       </FixedBox>
-    </>
+    </form>
   );
 };
 

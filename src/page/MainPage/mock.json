@@ -1,14 +1,14 @@
-[
-  {
-    "category": "111",
-    "productName": "111",
-    "productId": "111",
-    "price": "111"
-  },
-  {
-    "category": "222",
-    "productName": "222",
-    "productId": "222",
-    "price": "222"
-  }
-]
+{
+  "products": [
+    {
+      "id": "0",
+      "productCode": "6436856710-17910002754",
+      "name": "name",
+      "category": "category",
+      "subCategory": "subCategory",
+      "price": 0
+    }
+  ],
+  "totalPage": 10,
+  "totalCount": 100
+}

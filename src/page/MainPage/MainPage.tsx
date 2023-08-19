@@ -1,28 +1,58 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import SearchInput from '../../component/Input/SearchInput';
-import SelectInput from '../../component/Input/SelectInput';
+import Pagination from '../../component/Pagination';
 import { InputWrap } from '../../style/input';
+import categoryList from './category.json';
 import mockData from './mock.json';
 
 const MainPage = () => {
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+  const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [page, setPage] = useState(0);
+  // const { data } = useQuery(['products'], getProductList);
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <>
-      <SearchInput id='productId' {...{ register }} search={() => {}} />
-      <InputWrap width='300px'>
-        <SelectInput
-          id='category1'
-          {...{ register }}
-          options={[{ name: '카테고리1', value: 'category1' }]}
-        />
-        <SelectInput
-          id='category2'
-          {...{ register }}
-          options={[{ name: '카테고리2', value: 'category2' }]}
-        />
-      </InputWrap>
-
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <SearchInput id='productId' {...{ register }} search={() => {}} />
+        <InputWrap width='300px'>
+          <select
+            id='category'
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+          >
+            <option value=''>선택</option>
+            {categoryList.map((e) => (
+              <option key={e.name} value={e.name}>
+                {e.name}
+              </option>
+            ))}
+          </select>
+          <select
+            id='subCategory'
+            onChange={(e) => {
+              setSubCategory(e.target.value);
+            }}
+          >
+            <option value=''>선택</option>
+            {categoryList
+              .find((e) => e.name === category)
+              ?.subCategoryList.map((e) => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
+          </select>
+        </InputWrap>
+      </form>
       <table>
         <thead>
           <tr>
@@ -33,16 +63,17 @@ const MainPage = () => {
           </tr>
         </thead>
         <tbody>
-          {mockData.map(({ category, productName, productId, price }) => (
-            <tr key={productId}>
+          {mockData.products.map(({ id, category, subCategory, name, productCode, price }) => (
+            <tr key={id}>
               <td>{category}</td>
-              <td>{productName}</td>
-              <td>{productId}</td>
+              <td>{name}</td>
+              <td>{productCode}</td>
               <td>{price}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Pagination total={mockData.totalCount} limit={10} page={page} setPage={setPage} />
     </>
   );
 };
