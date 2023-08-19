@@ -1,49 +1,45 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useMutation, useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
-import URL from '../../constant/URL';
+import { getProductDetail, patchProductDetail } from '../../api/wrapper';
 import { InputWrap, Select } from '../../style/input';
-import mockData from './mock.json';
+import { ProductListItemResponse, ProductDetailUpdateRequest } from '../../types/api';
+
+interface IUpdateProductDetail {
+  productId: string;
+  data: ProductDetailUpdateRequest
+}
 
 const ProductPage = () => {
   const { register, handleSubmit, getValues } = useForm();
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
-  const navigate = useNavigate();
-  // const { data } = useQuery(['product', productCode]);
-  const onSubmit = () => {
+  const { data, refetch } = useQuery<ProductListItemResponse>(
+    ['product', productId], 
+    () => getProductDetail(productId!!)
+  );
+  const { mutate } = useMutation(
+    ({ productId, data }: IUpdateProductDetail) => {
+      return patchProductDetail(productId, data);
+    },
+    {
+      onSuccess: () => {
+        refetch();
+      }
+    }
+  )
+
+  const onSubmit = async () => {
     const requestBody = {
-      options: [
-        {
-          optionName: '누적 판매수',
-          isActive: getValues('options.option1'),
-        },
-        {
-          optionName: '실시간 조회수',
-          isActive: getValues('options.option2'),
-        },
-        {
-          optionName: '별점',
-          isActive: getValues('options.option3'),
-        },
-        {
-          optionName: '당일 판매수',
-          isActive: getValues('options.option4'),
-        },
-        {
-          optionName: '리뷰 글+날짜+프로필이미지+닉네임',
-          isActive: getValues('options.option5'),
-        },
-        {
-          optionName: '누적 리뷰 개수',
-          isActive: getValues('options.option6'),
-        },
-      ],
+      selectedOptionIds: data?.displayOptions?.filter((_, index) => 
+        getValues(`options.option${index}`)
+      ).map(option => option.id) ?? [],
       displayReviewCount: getValues('displayReviewCount'),
       displayTime: getValues('displayTime'),
     };
-    console.log(requestBody);
+    mutate({ productId: productId!!, data: requestBody });
   };
 
   return (
@@ -51,66 +47,48 @@ const ProductPage = () => {
       <FlexBox>
         <div>
           <h2>
-            {mockData.productName} {mockData.productId}
+            {data?.name} {data?.productCode}
           </h2>
-          <h3>노출할 정보</h3>
+          <h3>Display Information</h3>
           <GridBox>
-            <label>
-              <input type='checkbox' {...register('options.option1')} />
-              누적 판매수
-            </label>
-            <label>
-              <input type='checkbox' {...register('options.option2')} />
-              실시간 조회수
-            </label>
-            <label>
-              <input type='checkbox' {...register('options.option3')} />
-              별점
-            </label>
-            <label>
-              <input type='checkbox' {...register('options.option4')} />
-              당일 판매수
-            </label>
-            <label>
-              <input type='checkbox' {...register('options.option5')} />
-              리뷰 글+날짜+프로필이미지+닉네임
-            </label>
-            <label>
-              <input type='checkbox' {...register('options.option6')} />
-              누적 리뷰 개수
-            </label>
+            {
+              data?.displayOptions?.map((option, index) => (
+                  <label key={index}>
+                    <input type='checkbox' {...register(`options.option${index}`)} checked={option.isActive}/>
+                    {option.optionName}
+                  </label>
+                )
+              )
+            }
           </GridBox>
           <InputWrap>
             <div>
-              <h3>노출할 리뷰 개수</h3>
+              <h3>Display Review Count</h3>
               <Select {...register('displayReviewCount', { valueAsNumber: true })}>
-                <option value=''>선택</option>
-                <option value={5}>5</option>
-                <option value={10}>10</option>
+                {
+                  [1, 5, 10].map((value) => {
+                    return <option value={value} selected={value === data?.displayReviewCount}>{value}</option>
+                  })
+                }
               </Select>
             </div>
             <div>
-              <h3>노출할 시간</h3>
+              <h3>Display Time</h3>
               <Select {...register('displayTime', { valueAsNumber: true })}>
-                <option value=''>선택</option>
+                {
+                  [-1, 5, 10].map((value) => {
+                    return <option value={value} selected={value === data?.displayTime}>{value === -1 ? "infinity" : value}</option>
+                  })
+                }
               </Select>
             </div>
           </InputWrap>
-          <h3>리뷰 관리</h3>
-          <Button
-            size={BUTTON_SIZE.MEDIUM}
-            variant={BUTTON_VARIANT.PRIMARY}
-            type='button'
-            onClick={() => navigate(`${URL.REVIEW_MANAGE}?id=${productId}`)}
-          >
-            미노출 리뷰 설정하기
-          </Button>
         </div>
-        <div>미리보기</div>
+        <div>Preview</div>
       </FlexBox>
       <FixedBox>
         <Button type='submit' size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
-          ESL에 반영
+          Apply
         </Button>
       </FixedBox>
     </form>

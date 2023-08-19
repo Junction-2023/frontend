@@ -3,7 +3,7 @@ import {
   ProductListItemResponse,
   ProductListRequest,
   ProductListResponse,
-  ProductOptionUpdateRequest,
+  ProductDetailUpdateRequest,
   ReviewListResponse,
   ReviewSummaryListResponse,
   ReviewUpdateRequest,
@@ -14,8 +14,8 @@ export const getProductList = (params: ProductListRequest) =>
   apiClient.get<ProductListResponse>(API_URL.PRODUCTS(), { params }).then((res) => res.data);
 export const getProductDetail = (productId: string) =>
   apiClient.get<ProductListItemResponse>(API_URL.PRODUCT_DETAIL(productId)).then((res) => res.data);
-export const putProductOption = (productId: string, body: ProductOptionUpdateRequest) =>
-  apiClient.put(API_URL.PRODUCT_DETAIL_OPTIONS(productId), { body });
+export const patchProductDetail = (productId: string, body: ProductDetailUpdateRequest) =>
+  apiClient.patch(API_URL.PRODUCT_DETAIL(productId), body);
 export const patchProductReview = (productId: string, body: ReviewUpdateRequest) =>
   apiClient.patch(API_URL.PRODUCT_REVIEWS(productId), { body });
 export const getProductReviews = (productId: string) =>

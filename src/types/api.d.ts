@@ -29,7 +29,7 @@ export interface ProductListItemResponse {
   subCategory: string;
   price: number;
   qrLinkUrl: string;
-  mustViewReviewCount: number;
+  displayReviewCount: number;
   displayTime: number;
   displayOptions: DisplayOption[];
 }
@@ -37,12 +37,11 @@ export interface ProductListItemResponse {
 export interface DisplayOption {
   id: number;
   optionName: string;
-  optionValue: string;
   isActive: boolean;
 }
 
-export interface ProductOptionUpdateRequest {
-  options: ProductOption[];
+export interface ProductDetailUpdateRequest {
+  selectedOptionIds: number[];
   displayReviewCount: number;
   displayTime: number;
 }
