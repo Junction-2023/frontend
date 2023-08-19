@@ -24,7 +24,6 @@ const MainPage = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <SearchInput id='productId' {...{ register }} search={() => {}} />
         <InputWrap width='300px'>
           <select
             id='category'
@@ -54,6 +53,7 @@ const MainPage = () => {
                 </option>
               ))}
           </select>
+          <SearchInput id='productId' {...{ register }} search={() => {}} width='200px' />
         </InputWrap>
       </form>
       <table>

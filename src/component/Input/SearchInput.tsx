@@ -2,7 +2,6 @@ import { ChangeEventHandler, useState } from 'react';
 import { FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 import searchIcon20 from '../../asset/icon/search_icon_black.png';
-import { InputBox } from '../../style/input';
 import { CallBackFunction } from '../../types/common';
 
 type SearchInputType = {
@@ -15,6 +14,7 @@ type SearchInputType = {
   defaultValue?: string | number;
   disabled?: boolean;
   required?: boolean;
+  width?: string;
 };
 
 function SearchInput({
@@ -27,6 +27,7 @@ function SearchInput({
   required = false,
   defaultValue,
   disabled,
+  width,
 }: SearchInputType) {
   const [searchValue, setSearchValue] = useState('');
 
@@ -39,12 +40,11 @@ function SearchInput({
   };
 
   return (
-    <SearchInputBox>
-      <input
+    <SearchInputBox width={width}>
+      <Input
         type='text'
         id={id}
         {...register(id, { ...optionSetting })}
-        className={readOnly ? 'bg-white has-click-handler' : ''}
         readOnly={readOnly}
         placeholder={placeHolder}
         defaultValue={defaultValue}
@@ -61,9 +61,14 @@ function SearchInput({
   );
 }
 
-const SearchInputBox = styled(InputBox)`
+const SearchInputBox = styled.div<{ width?: string }>`
   display: flex;
   border: 1px solid #000;
+  width: ${(props) => props.width ?? '100%'};
+`;
+
+const Input = styled.input`
+  width: 100%;
 `;
 
 const SearchButton = styled.button`
