@@ -40,3 +40,54 @@ interface DisplayOption {
   optionValue: string;
   isActive: boolean;
 }
+
+interface ProductOptionUpdateRequest {
+  options: ProductOption[];
+  displayReviewCount: number;
+  displayTime: number;
+}
+
+interface ProductOption {
+  optionName: string;
+  optionValue?: string;
+  isActive: boolean;
+}
+
+interface ReviewUpdateRequest {
+  toVisible: boolean; // 미노출 -> 노출 : true && 노출 -> 미노출 : false
+  reviewIds: number[];
+}
+
+interface ReviewListRequest {
+  status: string;
+  searchKeyword: string;
+  type: string;
+  cursor?: string;
+  size: number;
+}
+
+interface ReviewListResponse {
+  reviews: ReviewDetail[];
+  hasNext: boolean;
+  totalCount: number;
+}
+
+interface ReviewDetail {
+  id: number;
+  profileImageUrl: string;
+  userName: string;
+  content: string;
+  reviewData: string;
+  imageUrls: string[];
+  status: string;
+}
+
+interface ReviewSummaryList {
+  reviewSummary: ReviewSummaryListItem[];
+  productName: string;
+}
+
+interface ReviewSummaryListItem {
+  rating: number;
+  count: number;
+}
