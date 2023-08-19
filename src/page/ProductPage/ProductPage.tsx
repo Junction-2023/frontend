@@ -23,6 +23,7 @@ const ProductPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const productId = searchParams.get('id');
+
   const { data, refetch } = useQuery<ProductDetailResponse>(['product', productId], () =>
     getProductDetail(productId!!),
   );
