@@ -20,8 +20,6 @@ export interface ProductListItem {
   category: string;
   subCategory: string;
   price: number;
-  accumulatedReviews: number;
-  averageStarRating: number;
 }
 
 export interface ProductListItemResponse {
@@ -57,7 +55,6 @@ export interface ProductOption {
 }
 
 export interface ReviewUpdateRequest {
-  toVisible: boolean; // 미노출 -> 노출 : true && 노출 -> 미노출 : false
   reviewIds: number[];
 }
 
@@ -66,6 +63,7 @@ export interface ReviewListRequest {
   type?: string;
   isVisible: boolean;
   cursor?: string;
+  page?: number;
   size: number;
 }
 
