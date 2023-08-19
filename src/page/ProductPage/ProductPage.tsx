@@ -6,7 +6,8 @@ import { getProductDetail, patchProductDetail } from '../../api/wrapper';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import Radio from '../../component/Input/Radio';
 import ProductDetail from '../../component/ProductDetail';
-import { InputWrap, Select } from '../../style/input';
+import { Subtitle1 } from '../../component/Typography/Subtitle';
+import { Select } from '../../style/input';
 import { color } from '../../style/theme';
 import { ProductDetailUpdateRequest, ProductListItemResponse } from '../../types/api';
 
@@ -56,7 +57,7 @@ const ProductPage = () => {
             $bgColor={color.offwhite_025}
           />
           <InnerWrap>
-            <h3>Display Information</h3>
+            <Subtitle1 $isBold>Display Information</Subtitle1>
             <GridBox>
               {data?.displayOptions?.map((option, index) => (
                 <Radio
@@ -70,12 +71,13 @@ const ProductPage = () => {
             </GridBox>
           </InnerWrap>
           <InnerWrap>
-            <div>
-              <InputWrap>
-                <h3>Display Review Count</h3>
+            <InputWrap>
+              <ColumnBox>
+                <StyledSubTitle1 $isBold>Display Review Count</StyledSubTitle1>
                 <Select
                   {...register('displayReviewCount', { valueAsNumber: true })}
                   defaultValue={data?.displayReviewCount}
+                  width='364px'
                 >
                   {[1, 5, 10].map((value) => {
                     return (
@@ -85,21 +87,24 @@ const ProductPage = () => {
                     );
                   })}
                 </Select>
-              </InputWrap>
-              <h3>Display Time</h3>
-              <Select
-                {...register('displayTime', { valueAsNumber: true })}
-                defaultValue={data?.displayTime}
-              >
-                {[-1, 5, 10].map((value) => {
-                  return (
-                    <option value={value} key={value}>
-                      {value === -1 ? 'infinity' : value}
-                    </option>
-                  );
-                })}
-              </Select>
-            </div>
+              </ColumnBox>
+              <ColumnBox>
+                <StyledSubTitle1 $isBold>Display Time</StyledSubTitle1>
+                <Select
+                  {...register('displayTime', { valueAsNumber: true })}
+                  defaultValue={data?.displayTime}
+                  width='364px'
+                >
+                  {[-1, 5, 10].map((value) => {
+                    return (
+                      <option value={value} key={value}>
+                        {value === -1 ? 'infinity' : value}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </ColumnBox>
+            </InputWrap>
           </InnerWrap>
         </div>
         <div>Preview</div>
@@ -117,9 +122,15 @@ const FlexBox = styled.div`
   display: flex;
 `;
 
+const InputWrap = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
 const GridBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-top: 24px;
 `;
 
 const FixedBox = styled.div`
@@ -138,6 +149,15 @@ const InnerWrap = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   padding: 28px;
   border-radius: 4px;
+`;
+
+const ColumnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledSubTitle1 = styled(Subtitle1)`
+  margin-bottom: 8px;
 `;
 
 export default ProductPage;
