@@ -4,6 +4,7 @@ import URL from '../constant/URL';
 import MainPage from '../page/MainPage/MainPage';
 import NotFoundPage from '../page/NotFoundPage/NotFoundPage';
 import ProductPage from '../page/ProductPage/ProductPage';
+import ReviewManagePage from '../page/ReviewManagePage/ReviewManagePage';
 
 function Router() {
   return (
@@ -12,6 +13,7 @@ function Router() {
         <Route element={<PageTemplate />}>
           <Route path={URL.MAIN} element={<MainPage />} />
           <Route path={URL.PRODUCT} element={<ProductPage />} />
+          <Route path={URL.REVIEW_MANAGE} element={<ReviewManagePage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>

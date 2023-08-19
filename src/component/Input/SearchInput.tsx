@@ -63,6 +63,7 @@ function SearchInput({
 
 const SearchInputBox = styled(InputBox)`
   display: flex;
+  border: 1px solid #000;
 `;
 
 const SearchButton = styled.button`

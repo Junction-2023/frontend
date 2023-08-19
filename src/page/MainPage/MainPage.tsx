@@ -24,19 +24,24 @@ const MainPage = () => {
       </InputWrap>
 
       <table>
-        <th>카테고리</th>
-        <th>상품명</th>
-        <th>상품번호</th>
-        <th>가격</th>
-
-        {mockData.map(({ category, productName, productId, price }) => (
+        <thead>
           <tr>
-            <td>{category}</td>
-            <td>{productName}</td>
-            <td>{productId}</td>
-            <td>{price}</td>
+            <th>카테고리</th>
+            <th>상품명</th>
+            <th>상품번호</th>
+            <th>가격</th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {mockData.map(({ category, productName, productId, price }) => (
+            <tr key={productId}>
+              <td>{category}</td>
+              <td>{productName}</td>
+              <td>{productId}</td>
+              <td>{price}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </>
   );
