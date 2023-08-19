@@ -53,14 +53,16 @@ const ProductPage = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <FlexBox>
         <div>
-          <ProductDetail
-            name={data?.name ?? ''}
-            productCode={data?.productCode ?? ''}
-            $bgColor={color.offwhite_025}
-          />
-          <Button type='submit' size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
-            Apply
-          </Button>
+          <TopWrapper>
+            <ProductDetail
+              name={data?.name ?? ''}
+              productCode={data?.productCode ?? ''}
+              $bgColor={color.offwhite_025}
+            />
+            <Button type='submit' size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
+              Apply
+            </Button>
+          </TopWrapper>
           <InnerWrap>
             <Subtitle1 $isBold>Display Information</Subtitle1>
             <GridBox>
@@ -71,6 +73,7 @@ const ProductPage = () => {
                   key={option.id}
                   register={register}
                   defaultChecked={option.isActive}
+                  name='displayOption'
                 />
               ))}
             </GridBox>
@@ -125,6 +128,13 @@ const ProductPage = () => {
 
 const FlexBox = styled.div`
   display: flex;
+`;
+
+const TopWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 35px;
 `;
 
 const InputWrap = styled.div`

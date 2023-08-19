@@ -8,12 +8,13 @@ interface RadioProps {
   label: string;
   defaultChecked: boolean;
   register: UseFormRegister<FieldValues>;
+  name: string;
 }
 
-const Radio = ({ id, label, defaultChecked, register }: RadioProps) => {
+const Radio = ({ id, label, defaultChecked, register, name }: RadioProps) => {
   return (
     <Label id={id}>
-      <input type='radio' id={id} defaultChecked={defaultChecked} {...register(id)} />
+      <input type='radio' id={id} defaultChecked={defaultChecked} {...register(id)} name={name} />
       <div className='showRadio'></div>
       <span>{label}</span>
     </Label>
