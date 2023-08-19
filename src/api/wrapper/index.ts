@@ -7,6 +7,7 @@ import {
   ReviewListResponse,
   ReviewSummaryListResponse,
   ReviewUpdateRequest,
+  CategoriesResponse,
 } from '../../types/api';
 import apiClient from '../apiClient';
 
@@ -24,3 +25,5 @@ export const getProductReviewsSummary = (productId: string) =>
   apiClient
     .get<ReviewSummaryListResponse>(API_URL.PRODUCT_REVIEWS_SUMMARY(productId))
     .then((res) => res.data);
+export const getCategories = () =>
+  apiClient.get<CategoriesResponse[]>(API_URL.CATEGORIES()).then((res) => res.data);
