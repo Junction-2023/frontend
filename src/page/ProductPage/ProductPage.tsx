@@ -7,9 +7,11 @@ import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/Text
 import Radio from '../../component/Input/Radio';
 import ProductDetail from '../../component/ProductDetail';
 import { Subtitle1 } from '../../component/Typography/Subtitle';
+import { Title4 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { color } from '../../style/theme';
 import { ProductDetailUpdateRequest, ProductListItemResponse } from '../../types/api';
+import Preview1 from './Preview/Preview1';
 
 interface IUpdateProductDetail {
   productId: string;
@@ -56,6 +58,9 @@ const ProductPage = () => {
             productCode={data?.productCode ?? ''}
             $bgColor={color.offwhite_025}
           />
+          <Button type='submit' size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
+            Apply
+          </Button>
           <InnerWrap>
             <Subtitle1 $isBold>Display Information</Subtitle1>
             <GridBox>
@@ -107,13 +112,13 @@ const ProductPage = () => {
             </InputWrap>
           </InnerWrap>
         </div>
-        <div>Preview</div>
+        <RightWrapper>
+          <Title4 $isBold>Preview</Title4>
+          <div>
+            <Preview1 />
+          </div>
+        </RightWrapper>
       </FlexBox>
-      <FixedBox>
-        <Button type='submit' size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
-          Apply
-        </Button>
-      </FixedBox>
     </form>
   );
 };
@@ -133,18 +138,6 @@ const GridBox = styled.div`
   margin-top: 24px;
 `;
 
-const FixedBox = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  padding: 10px;
-  box-shadow: 0px -4px 20px 0px rgba(0, 0, 0, 0.05);
-`;
-
 const InnerWrap = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   padding: 28px;
@@ -158,6 +151,14 @@ const ColumnBox = styled.div`
 
 const StyledSubTitle1 = styled(Subtitle1)`
   margin-bottom: 8px;
+`;
+
+const RightWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 44px 40px 0 40px;
+  background-color: #eaebee;
+  height: calc(100vh - 68px);
 `;
 
 export default ProductPage;
