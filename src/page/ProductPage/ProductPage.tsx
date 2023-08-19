@@ -1,11 +1,17 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
+import URL from '../../constant/URL';
 import { InputWrap } from '../../style/input';
 import mockData from './mock.json';
 
 const ProductPage = () => {
   const { register, handleSubmit, getValues } = useForm();
+  const [searchParams] = useSearchParams();
+  const productCode = searchParams.get('code');
+  const navigate = useNavigate();
+  // const { data } = useQuery(['product', productCode]);
   const onSubmit = () => {
     const requestBody = {
       options: [
@@ -91,7 +97,12 @@ const ProductPage = () => {
             </div>
           </InputWrap>
           <h3>리뷰 관리</h3>
-          <Button size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
+          <Button
+            size={BUTTON_SIZE.MEDIUM}
+            variant={BUTTON_VARIANT.PRIMARY}
+            type='button'
+            onClick={() => navigate(`${URL.REVIEW_MANAGE}?code=${productCode}`)}
+          >
             미노출 리뷰 설정하기
           </Button>
         </div>

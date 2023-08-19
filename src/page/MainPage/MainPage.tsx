@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
+import URL from '../../constant/URL';
 import { InputWrap } from '../../style/input';
 import categoryList from './category.json';
 import mockData from './mock.json';
@@ -12,6 +14,7 @@ const MainPage = () => {
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
   const [page, setPage] = useState(0);
+  const navigate = useNavigate();
   // const { data } = useQuery(['products'], getProductList);
 
   const onSubmit = (data: any) => {
@@ -64,7 +67,7 @@ const MainPage = () => {
         </thead>
         <tbody>
           {mockData.products.map(({ id, category, subCategory, name, productCode, price }) => (
-            <tr key={id}>
+            <tr key={id} onClick={() => navigate(`${URL.PRODUCT}?code=${productCode}`)}>
               <td>{category}</td>
               <td>{name}</td>
               <td>{productCode}</td>
