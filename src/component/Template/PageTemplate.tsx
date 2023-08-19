@@ -18,7 +18,7 @@ const BodyWrapper = styled.div`
 `;
 
 const Wrapper = styled.main`
-  background-color: #f5f7fa;
+  background-color: ${({ theme }) => theme.color.offwhite_025};
   height: calc(100vh - 68px);
 `;
 export default PageTemplate;
