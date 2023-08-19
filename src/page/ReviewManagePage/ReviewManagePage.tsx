@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
@@ -11,16 +12,40 @@ import { Select } from '../../style/input';
 import { Table } from '../../style/table';
 import ReviewRadioSet from './RadioInputSet';
 import mockData from './mock.json';
+import { useQuery } from 'react-query';
+import { getProductDetail, getProductReviews } from '../../api/wrapper';
 
 const ReviewManagePage = () => {
-  const { register } = useForm();
+  const { register, watch } = useForm();
   const [page, setPage] = useState(1);
-  const data = mockData;
+  const [searchParams] = useSearchParams();
+  const productId = searchParams.get('id');
+  const option1 = watch('options.option1');
+  const option2 = watch('options.option2');
+  const searchKeyword = watch('searchKeyword');
+  const filterType = watch('filter');
+
+  const { data } = useQuery(['product', productId], () => {
+    return getProductDetail(productId!!);
+  });
+  const { data: searchData } = useQuery(['productSearchs', productId, option1, option2, searchKeyword, filterType, page], () => {
+    console.log(option1);
+    console.log(option2);
+    return getProductReviews(productId!!, {
+      keyword: searchKeyword,
+      type: filterType,
+      isVisible: option1 === 'on',
+      page: page - 1,
+      size: 10
+    });
+  });
+
   return (
     <>
       <ProductDetail
-        name={'Freshness Guaranteed Mini Chocolate Chip Muffins, 12 Count'}
-        productCode={'46921280'}
+        name={data?.name ?? ''}
+        productCode={data?.productCode ?? ''}
+        imgSrc={data?.productImageUrl}
       />
       <TopWrapper>
         <Title2 $isBold>Review Management</Title2>
@@ -30,10 +55,10 @@ const ReviewManagePage = () => {
       </TopWrapper>
       <MainWrapper>
         <FlexBox>
-          <ReviewRadioSet />
+          <ReviewRadioSet register={register}/>
           <SearchWrapper>
             <Select {...register('filter')} width='110px' $isDark={false}>
-              {['Keyword', 'Content'].map((value) => {
+              {['USERNAME', 'CONTENT'].map((value) => {
                 return (
                   <option value={value} key={value}>
                     {value}
@@ -63,7 +88,7 @@ const ReviewManagePage = () => {
               </tr>
             </thead>
             <tbody>
-              {mockData.reviewList.map(({ visible, id, profileImageUrl, userName, content }) => (
+              {searchData?.reviews.map(({id, profileImageUrl, userName, content, reviewDate, visible }) => (
                 <tr key={id}>
                   <td>{visible ? 'On' : 'Off'}</td>
                   <td>{id}</td>
@@ -86,7 +111,7 @@ const ReviewManagePage = () => {
             </tbody>
           </Table>
         </TableWrapper>
-        <Pagination total={mockData.totalCount} limit={10} page={page} setPage={setPage} />
+        <Pagination total={searchData?.totalCount ?? 0} limit={10} page={page} setPage={setPage} />
       </MainWrapper>
     </>
   );
