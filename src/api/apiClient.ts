@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: '',
   withCredentials: true,
 });
 
