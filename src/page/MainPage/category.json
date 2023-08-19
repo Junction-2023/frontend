@@ -1,1 +1,4 @@
-[{ "name": "의류", "subCategoryList": ["원피스", "셔츠"] }]
+[
+  { "name": "Electronics", "subCategoryList": ["Gadgets", "Mobile"] },
+  { "name": "Fashion", "subCategoryList": ["Shirts"] }
+]
