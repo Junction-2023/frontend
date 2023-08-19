@@ -1,4 +1,4 @@
-interface ProductListRequest {
+export interface ProductListRequest {
   searchKeyword: string;
   category: string;
   subCategory: string;
@@ -6,13 +6,13 @@ interface ProductListRequest {
   size: number;
 }
 
-interface ProductListResponse {
+export interface ProductListResponse {
   products: ProductListItem[];
   totalPage: number;
   totalCount: number;
 }
 
-interface ProductListItem {
+export interface ProductListItem {
   id: string;
   productCode: string;
   name: string;
@@ -21,7 +21,7 @@ interface ProductListItem {
   price: number;
 }
 
-interface ProductListItemResponse {
+export interface ProductListItemResponse {
   id: number;
   productCode: string;
   name: string;
@@ -34,31 +34,31 @@ interface ProductListItemResponse {
   displayOptions: DisplayOption[];
 }
 
-interface DisplayOption {
+export interface DisplayOption {
   id: number;
   optionName: string;
   optionValue: string;
   isActive: boolean;
 }
 
-interface ProductOptionUpdateRequest {
+export interface ProductOptionUpdateRequest {
   options: ProductOption[];
   displayReviewCount: number;
   displayTime: number;
 }
 
-interface ProductOption {
+export interface ProductOption {
   optionName: string;
   optionValue?: string;
   isActive: boolean;
 }
 
-interface ReviewUpdateRequest {
+export interface ReviewUpdateRequest {
   toVisible: boolean; // 미노출 -> 노출 : true && 노출 -> 미노출 : false
   reviewIds: number[];
 }
 
-interface ReviewListRequest {
+export interface ReviewListRequest {
   status: string;
   searchKeyword: string;
   type: string;
@@ -66,13 +66,13 @@ interface ReviewListRequest {
   size: number;
 }
 
-interface ReviewListResponse {
+export interface ReviewListResponse {
   reviews: ReviewDetail[];
   hasNext: boolean;
   totalCount: number;
 }
 
-interface ReviewDetail {
+export interface ReviewDetail {
   id: number;
   profileImageUrl: string;
   userName: string;
@@ -82,12 +82,12 @@ interface ReviewDetail {
   status: string;
 }
 
-interface ReviewSummaryList {
+export interface ReviewSummaryListResponse {
   reviewSummary: ReviewSummaryListItem[];
   productName: string;
 }
 
-interface ReviewSummaryListItem {
+export interface ReviewSummaryListItem {
   rating: number;
   count: number;
 }
