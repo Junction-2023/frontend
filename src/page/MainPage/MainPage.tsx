@@ -14,17 +14,17 @@ import { Table } from '../../style/table';
 
 const MainPage = () => {
   const { register, handleSubmit } = useForm();
-  const [page, setPage] = useState(1);
+  const navigate = useNavigate();
   const [productListRequest, setProductListRequest] = useState({
     category: '',
     subCategory: '',
     searchKeyword: '',
-    page: page,
+    page: 1,
     size: 10,
   });
-  const navigate = useNavigate();
+
   const { data: categoryData } = useQuery([API_URL.CATEGORIES], getCategories);
-  const { data: productsData, refetch } = useQuery(['products', page, productListRequest], () =>
+  const { data: productsData, refetch } = useQuery(['products', productListRequest], () =>
     getProductList({
       ...productListRequest,
       searchKeyword:
@@ -161,7 +161,12 @@ const MainPage = () => {
           )}
         </tbody>
       </Table>
-      <Pagination total={totalCount} limit={10} page={page} setPage={setPage} />
+      <Pagination
+        total={totalCount}
+        limit={10}
+        page={productListRequest.page}
+        setPage={(page) => setProductListRequest({ ...productListRequest, page: Number(page) })}
+      />
     </>
   );
 };
