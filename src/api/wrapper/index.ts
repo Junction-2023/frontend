@@ -1,14 +1,14 @@
 import API_URL from '../../constant/API_URL';
 import {
+  CategoriesResponse,
   ProductDetailResponse,
+  ProductDetailUpdateRequest,
   ProductListRequest,
   ProductListResponse,
-  ProductDetailUpdateRequest,
   ReviewListRequest,
   ReviewListResponse,
   ReviewSummaryListResponse,
   ReviewUpdateRequest,
-  CategoriesResponse,
 } from '../../types/api';
 import apiClient from '../apiClient';
 

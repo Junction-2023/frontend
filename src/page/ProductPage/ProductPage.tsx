@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { getProductDetail, patchProductDetail } from '../../api/wrapper';
 import preview1Img from '../../asset/image/preview1.png';
@@ -21,7 +21,6 @@ interface IUpdateProductDetail {
 const ProductPage = () => {
   const { register, handleSubmit, watch } = useForm();
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const productId = searchParams.get('id');
   const { data, refetch } = useQuery<ProductDetailResponse>(['product', productId], () =>
     getProductDetail(productId!!),
