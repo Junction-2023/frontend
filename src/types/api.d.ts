@@ -20,9 +20,11 @@ export interface ProductListItem {
   category: string;
   subCategory: string;
   price: number;
+  accumulatedReviews: number;
+  averageStarRating: number;
 }
 
-export interface ProductListItemResponse {
+export interface ProductDetailResponse {
   id: number;
   productCode: string;
   productImageUrl: string;
@@ -84,7 +86,7 @@ export interface ReviewDetail {
 }
 
 export interface ReviewSummaryListResponse {
-  reviewSummary: ReviewSummaryListItem[];
+  reviewSummaries: ReviewSummaryListItem[];
   productName: string;
 }
 

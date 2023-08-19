@@ -4,6 +4,7 @@ const API_URL = {
   PRODUCT_REVIEWS: (productId: string) => `/products/${productId}/reviews`,
   PRODUCT_REVIEWS_SUMMARY: (productId: string) => `/products/${productId}/reviews-summary`,
   CATEGORIES: () => '/categories',
+
 };
 
 export default API_URL;
