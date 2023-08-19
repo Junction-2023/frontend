@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import searchIcon20 from '../asset/icon/search_icon_black.png';
-import selectIcon20 from '../asset/icon/select_icon_20.png';
 
 export const InputWrap = styled.div<{ width?: string }>`
   display: flex;
-  width: ${({ width }) => (width ? `${width} !important` : '100%')};
-  flex-wrap: wrap;
+  width: ${({ width }) => width ?? '100%'};
   align-items: center;
   gap: 0px 4px;
   margin-right: 4px;
@@ -14,11 +11,7 @@ export const InputWrap = styled.div<{ width?: string }>`
   }
 `;
 export const InputBox = styled.div<{ width?: string }>`
-  position: relative;
-  float: left;
-  display: flex;
   width: ${({ width }) => width ?? '100%'};
-  box-sizing: border-box;
   margin: 2px 0px;
 
   &:before {
@@ -78,7 +71,6 @@ export const InputBox = styled.div<{ width?: string }>`
       color: ${({ theme }) => theme.gray3};
     }
 
-    /* remove number arrow */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -86,52 +78,13 @@ export const InputBox = styled.div<{ width?: string }>`
     }
 
     &[type='number'] {
-      /* Firefox */
       appearance: textfield;
       -moz-appearance: textfield;
     }
 
-    /* hidden */
     &[type='hidden'] {
       position: absolute;
       clip: rect(0, 0, 0, 0);
     }
   }
-
-  .search-icon-button {
-    flex: 0 0 auto;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    background-image: url(${searchIcon20});
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 2px;
-
-    :disabled {
-      cursor: default;
-      background-color: ${({ theme }) => theme.gray1_5};
-    }
-  }
-`;
-export const Select = styled.select`
-  position: relative;
-  width: 100%;
-  font-size: 1.3rem;
-  line-height: 2rem;
-  padding-left: 6px;
-  padding-right: 22px;
-  box-sizing: border-box;
-  background-image: url(${selectIcon20});
-  background-repeat: no-repeat;
-  background-position: right 2px center;
-
-  &:-moz-placeholder,
-  &:-ms-input-placeholder,
-  &::-webkit-input-placeholder {
-    color: ${({ theme }) => theme.gray3};
-  }
-
-  border: 1px solid ${({ theme }) => theme.gray2};
-  border-radius: 2px;
 `;
