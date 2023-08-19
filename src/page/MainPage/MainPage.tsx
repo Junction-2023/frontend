@@ -1,12 +1,15 @@
+import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
+import SearchInput from '../../component/Input/SearchInput';
 import { InputBox } from '../../style/input';
 
 const MainPage = () => {
+  const { register } = useForm();
   return (
     <>
       <InputBox>
-        <input type='text' />
+        <SearchInput id='productId' {...{ register }} search={() => {}} />
       </InputBox>
       <Text>안녕하세요</Text>
       <Button size={BUTTON_SIZE.LARGE} variant={BUTTON_VARIANT.OUTLINED}>

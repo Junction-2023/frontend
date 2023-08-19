@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import searchIcon20 from '../asset/icon/search_icon_20.svg';
-import selectIcon20 from '../asset/icon/select_icon_20.svg';
+import searchIcon20 from '../asset/icon/search_icon_black.png';
+import selectIcon20 from '../asset/icon/select_icon_20.png';
 
 export const InputWrap = styled.div<{ width?: string }>`
   display: flex;
