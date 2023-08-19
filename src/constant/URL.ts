@@ -1,7 +1,8 @@
 const URL = {
   MAIN: '/',
-  PRODUCT: '/product',
+  PRODUCT: '/products',
   REVIEW_MANAGE: '/review-manage',
+  PRODUCT_REVIEW: '/products/:productId/reviews'
 };
 
 export default URL;

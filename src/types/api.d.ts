@@ -22,7 +22,7 @@ export interface ProductListItem {
   price: number;
 }
 
-export interface ProductListItemResponse {
+export interface ProductDetailResponse {
   id: number;
   productCode: string;
   productImageUrl: string;
@@ -84,7 +84,7 @@ export interface ReviewDetail {
 }
 
 export interface ReviewSummaryListResponse {
-  reviewSummary: ReviewSummaryListItem[];
+  reviewSummaries: ReviewSummaryListItem[];
   productName: string;
 }
 
