@@ -8,9 +8,9 @@ interface ReviewRadioSet {
 const ReviewRadioSet = ({register}: ReviewRadioSet) => {
   return (
     <CheckBoxList>
-      <input type='radio' id='option1' {...register('options.option1') }  name='options' defaultChecked />
+      <input type='radio' id='option1' {...register('options') } value="option1"  name='options' defaultChecked />
       <Label htmlFor='option1'>Displayed</Label>
-      <input type='radio' id='option2' {...register('options.option2') } name='options' />
+      <input type='radio' id='option2' {...register('options') } value="option2" name='options' />
       <Label htmlFor='option2'>Concealed</Label>
     </CheckBoxList>
   );

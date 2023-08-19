@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
@@ -11,7 +11,6 @@ import { Title2 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { Table } from '../../style/table';
 import ReviewRadioSet from './RadioInputSet';
-import mockData from './mock.json';
 import { useQuery } from 'react-query';
 import { getProductDetail, getProductReviews } from '../../api/wrapper';
 
@@ -20,21 +19,18 @@ const ReviewManagePage = () => {
   const [page, setPage] = useState(1);
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
-  const option1 = watch('options.option1');
-  const option2 = watch('options.option2');
+  const option = watch('options');
   const searchKeyword = watch('searchKeyword');
   const filterType = watch('filter');
 
   const { data } = useQuery(['product', productId], () => {
     return getProductDetail(productId!!);
   });
-  const { data: searchData } = useQuery(['productSearchs', productId, option1, option2, searchKeyword, filterType, page], () => {
-    console.log(option1);
-    console.log(option2);
+  const { data: searchData } = useQuery(['productSearchs', productId, option, searchKeyword, filterType, page], () => {
     return getProductReviews(productId!!, {
       keyword: searchKeyword,
       type: filterType,
-      isVisible: option1 === 'on',
+      isVisible: option === 'option1',
       page: page - 1,
       size: 10
     });
