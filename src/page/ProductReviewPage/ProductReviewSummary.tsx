@@ -25,12 +25,12 @@ export const ProductReviewSummary = ({ reviewSummaries }: Props) => {
         <H4>{score.toFixed(1)}</H4>
         {Array(Math.ceil(score))
           .fill(null)
-          .map((e, idx) => (
+          .map((_, idx) => (
             <img src={starFilled} key={idx + starFilled} />
           ))}
         {Array(5 - Math.ceil(score))
           .fill(null)
-          .map((e, idx) => (
+          .map((_, idx) => (
             <img src={star} key={idx + star} />
           ))}
       </ReviewSummaryLeft>
