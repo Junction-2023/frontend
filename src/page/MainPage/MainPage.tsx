@@ -4,13 +4,13 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { getCategories, getProductList } from '../../api/wrapper';
+import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
+import API_URL from '../../constant/API_URL';
 import URL from '../../constant/URL';
 import { Select } from '../../style/input';
 import { Table } from '../../style/table';
-import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
-import API_URL from '../../constant/API_URL';
 
 const MainPage = () => {
   const { register, handleSubmit } = useForm();
@@ -77,7 +77,6 @@ const MainPage = () => {
               id='subCategory'
               width='200px'
               onChange={(e) => {
-                console.log(e.target.value);
                 onSelectSubCategory(e.target.value);
               }}
               disabled={productListRequest.category === ''}
@@ -108,7 +107,7 @@ const MainPage = () => {
         <thead>
           <tr>
             {tableTitles.map((title) => (
-              <th>{title}</th>
+              <th key={title}>{title}</th>
             ))}
           </tr>
         </thead>
@@ -196,30 +195,30 @@ const LayoutSVG = () => (
     <path
       d='M7 1H2C1.44772 1 1 1.44772 1 2V7C1 7.55229 1.44772 8 2 8H7C7.55229 8 8 7.55229 8 7V2C8 1.44772 7.55229 1 7 1Z'
       stroke='#4D5159'
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     />
     <path
       d='M18 1H13C12.4477 1 12 1.44772 12 2V7C12 7.55229 12.4477 8 13 8H18C18.5523 8 19 7.55229 19 7V2C19 1.44772 18.5523 1 18 1Z'
       stroke='#4D5159'
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     />
     <path
       d='M18 12.0002H13C12.4477 12.0002 12 12.448 12 13.0002V18.0002C12 18.5525 12.4477 19.0002 13 19.0002H18C18.5523 19.0002 19 18.5525 19 18.0002V13.0002C19 12.448 18.5523 12.0002 18 12.0002Z'
       stroke='#4D5159'
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     />
     <path
       d='M7 12.0002H2C1.44772 12.0002 1 12.448 1 13.0002V18.0002C1 18.5525 1.44772 19.0002 2 19.0002H7C7.55229 19.0002 8 18.5525 8 18.0002V13.0002C8 12.448 7.55229 12.0002 7 12.0002Z'
       stroke='#4D5159'
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     />
   </svg>
 );
