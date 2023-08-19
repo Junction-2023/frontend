@@ -2,23 +2,22 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import { getProductDetail, patchProductDetail } from '../../api/wrapper';
+import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import { InputWrap, Select } from '../../style/input';
-import { ProductListItemResponse, ProductDetailUpdateRequest } from '../../types/api';
+import { ProductDetailUpdateRequest, ProductListItemResponse } from '../../types/api';
 
 interface IUpdateProductDetail {
   productId: string;
-  data: ProductDetailUpdateRequest
+  data: ProductDetailUpdateRequest;
 }
 
 const ProductPage = () => {
-  const { register, handleSubmit, getValues } = useForm();
+  const { register, handleSubmit, watch } = useForm();
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
-  const { data, refetch } = useQuery<ProductListItemResponse>(
-    ['product', productId], 
-    () => getProductDetail(productId!!)
+  const { data, refetch } = useQuery<ProductListItemResponse>(['product', productId], () =>
+    getProductDetail(productId!!),
   );
   const { mutate } = useMutation(
     ({ productId, data }: IUpdateProductDetail) => {
@@ -27,17 +26,18 @@ const ProductPage = () => {
     {
       onSuccess: () => {
         refetch();
-      }
-    }
-  )
+      },
+    },
+  );
 
   const onSubmit = async () => {
     const requestBody = {
-      selectedOptionIds: data?.displayOptions?.filter((_, index) => 
-        getValues(`options.option${index}`)
-      ).map(option => option.id) ?? [],
-      displayReviewCount: getValues('displayReviewCount'),
-      displayTime: getValues('displayTime'),
+      selectedOptionIds:
+        data?.displayOptions
+          ?.filter((_, index) => watch(`options.option${index}`))
+          .map((option) => option.id) ?? [],
+      displayReviewCount: watch('displayReviewCount'),
+      displayTime: watch('displayTime'),
     };
     mutate({ productId: productId!!, data: requestBody });
   };
@@ -51,35 +51,46 @@ const ProductPage = () => {
           </h2>
           <h3>Display Information</h3>
           <GridBox>
-            {
-              data?.displayOptions?.map((option, index) => (
-                  <label key={index}>
-                    <input type='checkbox' {...register(`options.option${index}`)} checked={option.isActive}/>
-                    {option.optionName}
-                  </label>
-                )
-              )
-            }
+            {data?.displayOptions?.map((option, index) => (
+              <label key={index}>
+                <input
+                  type='checkbox'
+                  {...register(`options.option${index}`)}
+                  defaultChecked={option.isActive}
+                />
+                {option.optionName}
+              </label>
+            ))}
           </GridBox>
           <InputWrap>
             <div>
               <h3>Display Review Count</h3>
-              <Select {...register('displayReviewCount', { valueAsNumber: true })}>
-                {
-                  [1, 5, 10].map((value) => {
-                    return <option value={value} selected={value === data?.displayReviewCount}>{value}</option>
-                  })
-                }
+              <Select
+                {...register('displayReviewCount', { valueAsNumber: true })}
+                defaultValue={data?.displayReviewCount}
+              >
+                {[1, 5, 10].map((value) => {
+                  return (
+                    <option value={value} key={value}>
+                      {value}
+                    </option>
+                  );
+                })}
               </Select>
             </div>
             <div>
               <h3>Display Time</h3>
-              <Select {...register('displayTime', { valueAsNumber: true })}>
-                {
-                  [-1, 5, 10].map((value) => {
-                    return <option value={value} selected={value === data?.displayTime}>{value === -1 ? "infinity" : value}</option>
-                  })
-                }
+              <Select
+                {...register('displayTime', { valueAsNumber: true })}
+                defaultValue={data?.displayTime}
+              >
+                {[-1, 5, 10].map((value) => {
+                  return (
+                    <option value={value} key={value}>
+                      {value === -1 ? 'infinity' : value}
+                    </option>
+                  );
+                })}
               </Select>
             </div>
           </InputWrap>
