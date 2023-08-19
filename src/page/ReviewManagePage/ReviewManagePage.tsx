@@ -4,38 +4,34 @@ import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
-import { InputWrap, Select } from '../../style/input';
+import ProductDetail from '../../component/ProductDetail';
+import { Title2 } from '../../component/Typography/Title';
+import { Table } from '../../style/table';
+import ReviewRadioSet from './RadioInputSet';
 import mockData from './mock.json';
 
 const ReviewManagePage = () => {
   const { register } = useForm();
   const [page, setPage] = useState(0);
+  const data = mockData;
   return (
-    <>
-      <h2>리뷰 관리</h2>
-      <FlexBox>
-        <p>노출하지 않을 리뷰를 선택해주세요</p>
-        <Button size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.OUTLINED}>
-          반영하기
+    <PageWrapper>
+      <ProductDetail
+        name={'Freshness Guaranteed Mini Chocolate Chip Muffins, 12 Count'}
+        productCode={'46921280'}
+      />
+      <TopWrapper>
+        <Title2 $isBold>Review Management</Title2>
+        <Button size={BUTTON_SIZE.LARGE} variant={BUTTON_VARIANT.PRIMARY}>
+          Apply
         </Button>
+      </TopWrapper>
+      <FlexBox>
+        <ReviewRadioSet />
+        <SearchInput id='searchKeyword' {...{ register }} search={() => {}} width='800px' />
       </FlexBox>
-      <InputWrap>
-        <Select>
-          <option value=''>선택</option>
-          {['카테고리1'].map((e) => (
-            <option value={e}>{e}</option>
-          ))}
-        </Select>
-        <Select>
-          <option value=''>선택</option>
-          {['카테고리1'].map((e) => (
-            <option value={e}>{e}</option>
-          ))}
-        </Select>
-        <SearchInput id='productId' {...{ register }} search={() => {}} />
-      </InputWrap>
 
-      <table>
+      <Table>
         <thead>
           <tr>
             <th>노출 여부</th>
@@ -56,14 +52,26 @@ const ReviewManagePage = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
       <Pagination total={mockData.totalCount} limit={10} page={page} setPage={setPage} />
-    </>
+    </PageWrapper>
   );
 };
 
+const PageWrapper = styled.div`
+  background-color: '#f5f7fa';
+`;
+
+const TopWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 28px;
+`;
+
 const FlexBox = styled.div`
   display: flex;
+  justify-content: space-between;
+  padding: 0 28px;
 `;
 
 export default ReviewManagePage;

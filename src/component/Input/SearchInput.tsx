@@ -15,6 +15,7 @@ type SearchInputType = {
   disabled?: boolean;
   required?: boolean;
   width?: string;
+  $isDark?: boolean;
 };
 
 function SearchInput({
@@ -22,12 +23,12 @@ function SearchInput({
   search,
   optionSetting,
   register,
-  placeHolder,
   readOnly,
   required = false,
   defaultValue,
   disabled,
   width,
+  $isDark = false,
 }: SearchInputType) {
   const [searchValue, setSearchValue] = useState('');
 
@@ -40,14 +41,14 @@ function SearchInput({
   };
 
   return (
-    <SearchInputBox width={width}>
-      <SearchIcon />
+    <SearchInputBox width={width} $isDark={$isDark}>
+      <SearchIcon $isDark={$isDark} />
       <Input
         type='text'
         id={id}
         {...register(id, { ...optionSetting })}
         readOnly={readOnly}
-        placeholder={placeHolder}
+        placeholder='Search'
         defaultValue={defaultValue}
         disabled={disabled}
         onClick={readOnly ? handleSearch : undefined}
@@ -56,39 +57,42 @@ function SearchInput({
           handleChange(e);
         }}
         required={required}
+        $isDark={$isDark}
       />
     </SearchInputBox>
   );
 }
 
-const SearchInputBox = styled.div<{ width?: string }>`
+const SearchInputBox = styled.div<{ width?: string; $isDark: boolean }>`
   display: flex;
   align-items: center;
-  border: 1px solid #000;
+  border: ${(props) => (props.$isDark ? '' : '1px solid #EAEBEE')};
   width: ${(props) => props.width ?? '100%'};
-  background-color: ${({ theme }) => theme.color.gray_800};
+  height: 40px;
+  color: ${(props) => (props.$isDark ? '#D1D3D8' : '#212124')};
+  background-color: ${(props) => (props.$isDark ? '#393A40' : '#FFF')};
   border-radius: 4px;
   padding: 16px 12px;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ $isDark: boolean }>`
   width: 100%;
-  color: ${({ theme }) => theme.color.gray_400};
-  background-color: ${({ theme }) => theme.color.gray_800};
+  color: ${(props) => (props.$isDark ? '#D1D3D8' : '#212124')};
+  background-color: ${(props) => (props.$isDark ? '#393A40' : '#FFF')};
   outline: 0;
   font-size: 16px;
   font-weight: 500;
 
   &::placeholder {
-    color: ${({ theme }) => theme.color.gray_600};
+    color: ${(props) => (props.$isDark ? '#D1D3D8' : '#212124')};
   }
 `;
 
-const SearchIcon = styled.span`
+const SearchIcon = styled.span<{ $isDark: boolean }>`
   width: 20px;
   height: 20px;
   margin-right: 8px;
-  background-color: ${({ theme }) => theme.color.gray_800};
+  background-color: ${(props) => (props.$isDark ? '#393A40' : '#FFF')};
   background-image: url(${searchIcon20});
   background-repeat: no-repeat;
   background-position: center;

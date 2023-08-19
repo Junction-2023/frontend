@@ -1,9 +1,9 @@
 export interface ProductListRequest {
-  searchKeyword: string;
-  category: string;
-  subCategory: string;
+  searchKeyword?: string;
+  category?: string;
+  subCategory?: string;
   page: number;
-  size: number;
+  size?: number;
 }
 
 export interface ProductListResponse {
