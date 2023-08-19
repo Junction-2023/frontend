@@ -20,6 +20,8 @@ export interface ProductListItem {
   category: string;
   subCategory: string;
   price: number;
+  accumulatedReviews: number;
+  averageStarRating: number;
 }
 
 export interface ProductListItemResponse {
