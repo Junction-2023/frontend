@@ -6,11 +6,9 @@ function PageTemplate() {
   return (
     <BodyWrapper>
       <Header />
-      <main>
-        <Wrapper>
-          <Outlet />
-        </Wrapper>
-      </main>
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
     </BodyWrapper>
   );
 }
@@ -19,5 +17,8 @@ const BodyWrapper = styled.div`
   width: 1280px;
 `;
 
-const Wrapper = styled.main``;
+const Wrapper = styled.main`
+  background-color: ${({ theme }) => theme.color.offwhite_025};
+  height: calc(100vh - 68px);
+`;
 export default PageTemplate;

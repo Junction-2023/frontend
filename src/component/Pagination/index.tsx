@@ -20,9 +20,14 @@ function Pagination({ total, limit, page, setPage }: PaginationProps) {
         {Array(numPages)
           .fill(null)
           .map((_, i) => (
-            <button type='button' key={i + 1} onClick={() => setPage(i + 1)}>
+            <PageButton
+              type='button'
+              key={i + 1}
+              onClick={() => setPage(i + 1)}
+              $isActive={i + 1 === page}
+            >
               {i + 1}
-            </button>
+            </PageButton>
           ))}
         <ArrowButton onClick={() => setPage(page + 1)} disabled={page === numPages}>
           &gt;
@@ -36,15 +41,19 @@ const Nav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   margin: 16px;
 `;
 
 const ArrowButton = styled.button`
   padding: 4px;
-  background: #000;
-  color: #fff;
-  font-size: 1rem;
+  color: ${({ theme }) => theme.color.gray_700};
+`;
+
+const PageButton = styled.button<{ $isActive: boolean }>`
+  color: ${(props) => (props.$isActive ? '#212124' : '#4D5159')};
+  font-weight: ${(props) => (props.$isActive ? 700 : 500)};
+  font-size: 14px;
 `;
 
 export default Pagination;

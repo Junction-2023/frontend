@@ -21,6 +21,8 @@ export const color = {
   primary_400: '#6143FF',
   primary_500: '#4C3CF6',
   primary_600: '#3E30D6',
+  offwhite_000: '#FAFBFD',
+  offwhite_025: '#F5F7FA',
 };
 
 const theme = {
