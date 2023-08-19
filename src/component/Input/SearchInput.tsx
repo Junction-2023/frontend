@@ -41,6 +41,7 @@ function SearchInput({
 
   return (
     <SearchInputBox width={width}>
+      <SearchIcon />
       <Input
         type='text'
         id={id}
@@ -56,7 +57,6 @@ function SearchInput({
         }}
         required={required}
       />
-      <SearchButton type='button' onClick={handleSearch} disabled={disabled} />
     </SearchInputBox>
   );
 }
@@ -71,7 +71,7 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const SearchButton = styled.button`
+const SearchIcon = styled.span`
   width: 20px;
   height: 20px;
   margin-right: 0;
@@ -79,11 +79,6 @@ const SearchButton = styled.button`
   background-image: url(${searchIcon20});
   background-repeat: no-repeat;
   background-position: center;
-
-  :disabled {
-    cursor: default;
-    background-color: ${({ theme }) => theme.gray1_5};
-  }
 `;
 
 export default SearchInput;

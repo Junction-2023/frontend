@@ -24,40 +24,44 @@ const MainPage = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <InputWrap width='300px'>
-          <Select
-            id='category'
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
-          >
-            <option value=''>선택</option>
-            {categoryList.map((e) => (
-              <option key={e.name} value={e.name}>
-                {e.name}
-              </option>
-            ))}
-          </Select>
-          <Select
-            id='subCategory'
-            onChange={(e) => {
-              setSubCategory(e.target.value);
-            }}
-            disabled={category === ''}
-          >
-            <option value=''>선택</option>
-            {categoryList
-              .find((e) => e.name === category)
-              ?.subCategoryList.map((e) => (
-                <option key={e} value={e}>
-                  {e}
+        <TopWrapper>
+          <InputWrap>
+            <Select
+              id='category'
+              width='146px'
+              onChange={(e) => {
+                setCategory(e.target.value);
+              }}
+            >
+              <option value=''>선택</option>
+              {categoryList.map((e) => (
+                <option key={e.name} value={e.name}>
+                  {e.name}
                 </option>
               ))}
-          </Select>
+            </Select>
+            <Select
+              id='subCategory'
+              width='200px'
+              onChange={(e) => {
+                setSubCategory(e.target.value);
+              }}
+              disabled={category === ''}
+            >
+              <option value=''>선택</option>
+              {categoryList
+                .find((e) => e.name === category)
+                ?.subCategoryList.map((e) => (
+                  <option key={e} value={e}>
+                    {e}
+                  </option>
+                ))}
+            </Select>
+          </InputWrap>
           <SearchInput id='productId' {...{ register }} search={() => {}} width='200px' />
-        </InputWrap>
+        </TopWrapper>
       </form>
-      <table>
+      <Table>
         <thead>
           <tr>
             <th>카테고리</th>
@@ -69,25 +73,31 @@ const MainPage = () => {
         <tbody>
           {mockData.products.map(({ id, category, subCategory, name, productCode, price }) => (
             <tr key={id} onClick={() => navigate(`${URL.PRODUCT}?code=${productCode}`)}>
-              <td>{category}</td>
+              <td>
+                {category} / {subCategory}
+              </td>
               <td>{name}</td>
               <td>{productCode}</td>
               <td>{price}</td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
       <Pagination total={mockData.totalCount} limit={10} page={page} setPage={setPage} />
     </>
   );
 };
 
-const Text = styled.p`
-  color: ${({ theme }) => theme.color.gray_50};
+const TopWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: ${({ theme }) => theme.color.black};
 `;
 
-const FlexBox = styled.div`
-  display: flex;
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
 `;
 
 export default MainPage;

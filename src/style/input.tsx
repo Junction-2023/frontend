@@ -11,16 +11,17 @@ export const InputWrap = styled.div<{ width?: string }>`
   }
 `;
 
-export const Select = styled.select`
-  width: 100%;
-  height: 20px;
+export const Select = styled.select<{ width?: string }>`
+  width: ${(props) => props.width ?? '100%'};
+  height: 40px;
   font-size: 1rem;
-  padding: 0 22px 0 6px;
+  padding-right: 22px;
+  background-color: ${({ theme }) => theme.color.gray_800};
+  color: ${({ theme }) => theme.color.gray_200};
+  border-radius: 4px;
 
-  &:not(:has(option:checked)) {
-    color: ${({ theme }) => theme.gray3};
-  }
-  option {
-    color: ${({ theme }) => theme.black};
+  &:disabled {
+    background-color: ${({ theme }) => theme.color.gray_800};
+    color: ${({ theme }) => theme.color.gray_650};
   }
 `;
