@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import SearchInput from '../../component/Input/SearchInput';
-import SelectInput from '../../component/Input/SelectInput';
 import Pagination from '../../component/Pagination';
-import { InputWrap } from '../../style/input';
+import { InputWrap, Select } from '../../style/input';
 import mockData from './mock.json';
 
 const ReviewManagePage = () => {
@@ -21,16 +20,18 @@ const ReviewManagePage = () => {
         </Button>
       </FlexBox>
       <InputWrap>
-        <SelectInput
-          id='category1'
-          {...{ register }}
-          options={[{ name: '카테고리1', value: 'category1' }]}
-        />
-        <SelectInput
-          id='category2'
-          {...{ register }}
-          options={[{ name: '카테고리2', value: 'category2' }]}
-        />
+        <Select>
+          <option value=''>선택</option>
+          {['카테고리1'].map((e) => (
+            <option value={e}>{e}</option>
+          ))}
+        </Select>
+        <Select>
+          <option value=''>선택</option>
+          {['카테고리1'].map((e) => (
+            <option value={e}>{e}</option>
+          ))}
+        </Select>
         <SearchInput id='productId' {...{ register }} search={() => {}} />
       </InputWrap>
 

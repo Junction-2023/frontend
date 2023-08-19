@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import URL from '../../constant/URL';
-import { InputWrap } from '../../style/input';
+import { InputWrap, Select } from '../../style/input';
 import mockData from './mock.json';
 
 const ProductPage = () => {
@@ -83,17 +83,17 @@ const ProductPage = () => {
           <InputWrap>
             <div>
               <h3>노출할 리뷰 개수</h3>
-              <select {...register('displayReviewCount', { valueAsNumber: true })}>
+              <Select {...register('displayReviewCount', { valueAsNumber: true })}>
                 <option value=''>선택</option>
                 <option value={5}>5</option>
                 <option value={10}>10</option>
-              </select>
+              </Select>
             </div>
             <div>
               <h3>노출할 시간</h3>
-              <select {...register('displayTime', { valueAsNumber: true })}>
+              <Select {...register('displayTime', { valueAsNumber: true })}>
                 <option value=''>선택</option>
-              </select>
+              </Select>
             </div>
           </InputWrap>
           <h3>리뷰 관리</h3>

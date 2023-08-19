@@ -5,7 +5,7 @@ import { styled } from 'styled-components';
 import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
 import URL from '../../constant/URL';
-import { InputWrap } from '../../style/input';
+import { InputWrap, Select } from '../../style/input';
 import categoryList from './category.json';
 import mockData from './mock.json';
 
@@ -25,7 +25,7 @@ const MainPage = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputWrap width='300px'>
-          <select
+          <Select
             id='category'
             onChange={(e) => {
               setCategory(e.target.value);
@@ -37,12 +37,13 @@ const MainPage = () => {
                 {e.name}
               </option>
             ))}
-          </select>
-          <select
+          </Select>
+          <Select
             id='subCategory'
             onChange={(e) => {
               setSubCategory(e.target.value);
             }}
+            disabled={category === ''}
           >
             <option value=''>선택</option>
             {categoryList
@@ -52,7 +53,7 @@ const MainPage = () => {
                   {e}
                 </option>
               ))}
-          </select>
+          </Select>
           <SearchInput id='productId' {...{ register }} search={() => {}} width='200px' />
         </InputWrap>
       </form>
