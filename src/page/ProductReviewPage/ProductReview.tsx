@@ -21,15 +21,15 @@ export const ProductReview = ({ review }: Params) => {
       </ProfileWrapper>
       <div>{review.content}</div>
       {/* TODO: 별점 추가 필요 */}
-      <div>
-        {review.imageUrls.map((imageUrl) => {
+      <FlexBox>
+        {review.imageUrls.slice(0, 5).map((imageUrl) => {
           return (
             <ProductImgWrapper>
               <StyledImg src={imageUrl} key={imageUrl} />
             </ProductImgWrapper>
           );
         })}
-      </div>
+      </FlexBox>
     </Wrapper>
   );
 };
@@ -65,6 +65,11 @@ const StyledImg = styled.img`
 `;
 
 const DetailWrapper = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
+const FlexBox = styled.div`
   display: flex;
   gap: 4px;
 `;
