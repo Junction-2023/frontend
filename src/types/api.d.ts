@@ -92,3 +92,10 @@ export interface ReviewSummaryListItem {
   rating: number;
   count: number;
 }
+
+export interface CategoriesRequest {}
+
+export interface CategoriesResponse {
+  category: string;
+  subCategories: string[];
+}

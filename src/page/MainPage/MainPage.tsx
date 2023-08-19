@@ -3,41 +3,52 @@ import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { getProductList } from '../../api/wrapper';
+import { getCategories, getProductList } from '../../api/wrapper';
 import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
 import URL from '../../constant/URL';
 import { Select } from '../../style/input';
 import { Table } from '../../style/table';
-import categoryList from './category.json';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
+import API_URL from '../../constant/API_URL';
 
 const MainPage = () => {
   const { register, handleSubmit } = useForm();
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [category, setCategory] = useState('');
-  const [subCategory, setSubCategory] = useState('');
   const [page, setPage] = useState(1);
+  const [productListRequest, setProductListRequest] = useState({
+    category: '',
+    subCategory: '',
+    searchKeyword: '',
+    page: page,
+    size: 10,
+  });
   const navigate = useNavigate();
-  const { data, refetch } = useQuery(['products', page], () =>
+  const { data: categoryData } = useQuery([API_URL.CATEGORIES], getCategories);
+  const { data: productsData, refetch } = useQuery(['products', page, productListRequest], () =>
     getProductList({
-      searchKeyword: searchKeyword === '' ? undefined : searchKeyword,
-      category: category === '' ? undefined : category,
-      subCategory: subCategory === '' ? undefined : subCategory,
-      page,
-      size: 10,
+      ...productListRequest,
+      searchKeyword:
+        productListRequest.searchKeyword === '' ? undefined : productListRequest.searchKeyword,
+      category: productListRequest.category === '' ? undefined : productListRequest.category,
+      subCategory:
+        productListRequest.subCategory === '' ? undefined : productListRequest.subCategory,
     }),
   );
 
-  if (data === undefined) {
-    return 'An error has occurred. Contact site administrator';
-  }
+  const { products, totalCount } = productsData ?? { products: [], totalCount: 0 };
 
-  const { products, totalCount, totalPage } = data;
+  const onSelectCategory = (value: string) => {
+    setProductListRequest({ ...productListRequest, category: value, subCategory: '' });
+    refetch();
+  };
+  const onSelectSubCategory = (value: string) => {
+    setProductListRequest({ ...productListRequest, subCategory: value });
+    refetch();
+  };
 
   const onSubmit = (data: any) => {
     const { searchKeyword } = data;
-    setSearchKeyword(searchKeyword);
+    setProductListRequest({ ...productListRequest, searchKeyword });
     refetch();
   };
 
@@ -52,13 +63,13 @@ const MainPage = () => {
               id='category'
               width='146px'
               onChange={(e) => {
-                setCategory(e.target.value);
+                onSelectCategory(e.target.value);
               }}
             >
               <option value=''>Main Category</option>
-              {categoryList.map((e) => (
-                <option key={e.name} value={e.name}>
-                  {e.name}
+              {categoryData?.map(({ category }) => (
+                <option key={category} value={category}>
+                  {category}
                 </option>
               ))}
             </Select>
@@ -66,14 +77,15 @@ const MainPage = () => {
               id='subCategory'
               width='200px'
               onChange={(e) => {
-                setSubCategory(e.target.value);
+                console.log(e.target.value);
+                onSelectSubCategory(e.target.value);
               }}
-              disabled={category === ''}
+              disabled={productListRequest.category === ''}
             >
               <option value=''>Sub Category</option>
-              {categoryList
-                .find((e) => e.name === category)
-                ?.subCategoryList.map((e) => (
+              {categoryData
+                ?.find((e) => e.category === productListRequest.category)
+                ?.subCategories.map((e) => (
                   <option key={e} value={e}>
                     {e}
                   </option>
