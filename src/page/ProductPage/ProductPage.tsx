@@ -3,6 +3,7 @@ import { useMutation, useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { getProductDetail, patchProductDetail } from '../../api/wrapper';
+import preview1Img from '../../asset/image/preview1.png';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import Radio from '../../component/Input/Radio';
 import ProductDetail from '../../component/ProductDetail';
@@ -11,7 +12,6 @@ import { Title4 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { color } from '../../style/theme';
 import { ProductDetailUpdateRequest, ProductListItemResponse } from '../../types/api';
-import Preview1 from './Preview/Preview1';
 
 interface IUpdateProductDetail {
   productId: string;
@@ -117,9 +117,9 @@ const ProductPage = () => {
         </div>
         <RightWrapper>
           <Title4 $isBold>Preview</Title4>
-          <div>
-            <Preview1 />
-          </div>
+          <PreviewWrapper>
+            <img src={preview1Img} />
+          </PreviewWrapper>
         </RightWrapper>
       </FlexBox>
     </form>
@@ -167,8 +167,16 @@ const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 44px 40px 0 40px;
-  background-color: #eaebee;
+  border-left: ${({ theme }) => `1px solid${theme.color.gray_200}`};
   height: calc(100vh - 68px);
+  width: 100%;
+`;
+
+const PreviewWrapper = styled.div`
+  display: flex;
+  padding-top: 100px;
+  align-items: center;
+  margin: 0 auto;
 `;
 
 export default ProductPage;

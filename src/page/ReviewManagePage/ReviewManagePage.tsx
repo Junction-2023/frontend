@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { getProductDetail, getProductReviews } from '../../api/wrapper';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import Checkbox from '../../component/Input/Checkbox';
 import SearchInput from '../../component/Input/SearchInput';
@@ -10,9 +12,8 @@ import ProductDetail from '../../component/ProductDetail';
 import { Title2 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { Table } from '../../style/table';
+import { ReviewListRequest } from '../../types/api';
 import ReviewRadioSet from './RadioInputSet';
-import { useQuery } from 'react-query';
-import { getProductDetail, getProductReviews } from '../../api/wrapper';
 
 const ReviewManagePage = () => {
   const { register, watch } = useForm();
@@ -26,15 +27,18 @@ const ReviewManagePage = () => {
   const { data } = useQuery(['product', productId], () => {
     return getProductDetail(productId!!);
   });
-  const { data: searchData } = useQuery(['productSearchs', productId, option, searchKeyword, filterType, page], () => {
-    return getProductReviews(productId!!, {
-      keyword: searchKeyword,
-      type: filterType,
-      isVisible: option === 'option1',
-      page: page - 1,
-      size: 10
-    });
-  });
+  const { data: searchData } = useQuery(
+    ['productSearchs', productId, option, searchKeyword, filterType, page],
+    () => {
+      return getProductReviews(productId!!, {
+        keyword: searchKeyword,
+        type: filterType,
+        isVisible: option === 'option1',
+        page: page - 1,
+        size: 10,
+      } as ReviewListRequest);
+    },
+  );
 
   return (
     <>
@@ -51,7 +55,7 @@ const ReviewManagePage = () => {
       </TopWrapper>
       <MainWrapper>
         <FlexBox>
-          <ReviewRadioSet register={register}/>
+          <ReviewRadioSet register={register} />
           <SearchWrapper>
             <Select {...register('filter')} width='110px' $isDark={false}>
               {['USERNAME', 'CONTENT'].map((value) => {
@@ -84,26 +88,28 @@ const ReviewManagePage = () => {
               </tr>
             </thead>
             <tbody>
-              {searchData?.reviews.map(({id, profileImageUrl, userName, content, reviewDate, visible }) => (
-                <tr key={id}>
-                  <td>{visible ? 'On' : 'Off'}</td>
-                  <td>{id}</td>
-                  <td>
-                    <ProfileWrapper>
-                      <ProfileImgWrapper>
-                        <ProfileImg src={profileImageUrl} alt='profile' />
-                      </ProfileImgWrapper>
-                      <div>{userName}</div>
-                    </ProfileWrapper>
-                  </td>
-                  <td>{content}</td>
-                  <td>
-                    <CenterDiv>
-                      <StyledCheckbox id={''} />
-                    </CenterDiv>
-                  </td>
-                </tr>
-              ))}
+              {searchData?.reviews.map(
+                ({ id, profileImageUrl, userName, content, reviewDate, visible }) => (
+                  <tr key={id}>
+                    <td>{visible ? 'On' : 'Off'}</td>
+                    <td>{id}</td>
+                    <td>
+                      <ProfileWrapper>
+                        <ProfileImgWrapper>
+                          <ProfileImg src={profileImageUrl} alt='profile' />
+                        </ProfileImgWrapper>
+                        <div>{userName}</div>
+                      </ProfileWrapper>
+                    </td>
+                    <td>{content}</td>
+                    <td>
+                      <CenterDiv>
+                        <StyledCheckbox id={''} />
+                      </CenterDiv>
+                    </td>
+                  </tr>
+                ),
+              )}
             </tbody>
           </Table>
         </TableWrapper>
