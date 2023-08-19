@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import Checkbox from '../../component/Input/Checkbox';
@@ -11,11 +11,17 @@ import { Title2 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { Table } from '../../style/table';
 import ReviewRadioSet from './RadioInputSet';
-import { useQuery } from 'react-query';
-import { getProductDetail, getProductReviews } from '../../api/wrapper';
+import { useMutation, useQuery } from 'react-query';
+import { ReviewUpdateRequest } from '../../types/api';
+import { getProductDetail, getProductReviews, patchProductReview } from '../../api/wrapper';
+
+interface IUpdateProductReview {
+  productId: string;
+  data: ReviewUpdateRequest;
+}
 
 const ReviewManagePage = () => {
-  const { register, watch } = useForm();
+  const { register, watch, handleSubmit } = useForm();
   const [page, setPage] = useState(1);
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
@@ -26,7 +32,8 @@ const ReviewManagePage = () => {
   const { data } = useQuery(['product', productId], () => {
     return getProductDetail(productId!!);
   });
-  const { data: searchData } = useQuery(['productSearchs', productId, option, searchKeyword, filterType, page], () => {
+
+  const { data: searchData, refetch } = useQuery(['productSearchs', productId, option, searchKeyword, filterType, page], () => {
     return getProductReviews(productId!!, {
       keyword: searchKeyword,
       type: filterType,
@@ -36,8 +43,27 @@ const ReviewManagePage = () => {
     });
   });
 
+  const { mutate } = useMutation(
+    ({ productId, data }: IUpdateProductReview) => {
+      return patchProductReview(productId, data);
+    },
+    {
+      onSuccess: () => {
+        refetch();
+      }
+    }
+  );
+
+  const onSubmit = async (data: FieldValues) => {
+    const ids = data.checkBox.filter((value: string | boolean) => {
+      return value !== false && typeof value === 'string';
+    }).map((value: string) => {return parseInt(value.split('.')[1]);})
+
+    mutate({ productId: productId!!, data: { reviewIds: ids ?? [] } })
+  }
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <ProductDetail
         name={data?.name ?? ''}
         productCode={data?.productCode ?? ''}
@@ -84,7 +110,7 @@ const ReviewManagePage = () => {
               </tr>
             </thead>
             <tbody>
-              {searchData?.reviews.map(({id, profileImageUrl, userName, content, reviewDate, visible }) => (
+              {searchData?.reviews.map(({id, profileImageUrl, userName, content, visible }) => (
                 <tr key={id}>
                   <td>{visible ? 'On' : 'Off'}</td>
                   <td>{id}</td>
@@ -99,7 +125,7 @@ const ReviewManagePage = () => {
                   <td>{content}</td>
                   <td>
                     <CenterDiv>
-                      <StyledCheckbox id={''} />
+                      <StyledCheckbox id={`checkBox.${id}`} register={register}/>
                     </CenterDiv>
                   </td>
                 </tr>
@@ -109,7 +135,7 @@ const ReviewManagePage = () => {
         </TableWrapper>
         <Pagination total={searchData?.totalCount ?? 0} limit={10} page={page} setPage={setPage} />
       </MainWrapper>
-    </>
+    </form>
   );
 };
 

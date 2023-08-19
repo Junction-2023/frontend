@@ -19,7 +19,7 @@ export const getProductDetail = (productId: string) =>
 export const patchProductDetail = (productId: string, body: ProductDetailUpdateRequest) =>
   apiClient.patch(API_URL.PRODUCT_DETAIL(productId), body);
 export const patchProductReview = (productId: string, body: ReviewUpdateRequest) =>
-  apiClient.patch(API_URL.PRODUCT_REVIEWS(productId), { body });
+  apiClient.patch(API_URL.PRODUCT_REVIEWS(productId), body);
 export const getProductReviews = (productId: string, params: ReviewListRequest) =>
   apiClient.get<ReviewListResponse>(API_URL.PRODUCT_REVIEWS(productId), { params }).then((res) => res.data);
 export const getProductReviewsSummary = (productId: string) =>

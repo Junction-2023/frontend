@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 import checkbox from '../../asset/icon/checkbox.png';
 import checkboxChecked from '../../asset/icon/checkbox_checked.png';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
 
 interface CheckboxProps {
   id: string;
+  register: UseFormRegister<FieldValues>;
 }
 
-const Checkbox = ({ id }: CheckboxProps) => {
+const Checkbox = ({ id, register }: CheckboxProps) => {
   return (
     <Label>
-      <input type='checkbox' />
+      <input type='checkbox' value={id} {...register(id)}/>
       <div className='showCheckbox'></div>
     </Label>
   );
