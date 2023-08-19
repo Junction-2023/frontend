@@ -15,7 +15,7 @@ const ReviewManagePage = () => {
   const [page, setPage] = useState(0);
   const data = mockData;
   return (
-    <PageWrapper>
+    <>
       <ProductDetail
         name={'Freshness Guaranteed Mini Chocolate Chip Muffins, 12 Count'}
         productCode={'46921280'}
@@ -26,46 +26,48 @@ const ReviewManagePage = () => {
           Apply
         </Button>
       </TopWrapper>
-      <FlexBox>
-        <ReviewRadioSet />
-        <SearchInput id='searchKeyword' {...{ register }} search={() => {}} width='800px' />
-      </FlexBox>
-
-      <Table>
-        <thead>
-          <tr>
-            <th>노출 여부</th>
-            <th>리뷰 아이디</th>
-            <th>유저 프로필</th>
-            <th>닉네임</th>
-            <th>리뷰 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mockData.reviewList.map(({ isShown, reviewId, profileImageUrl, nickname, review }) => (
-            <tr key={reviewId}>
-              <td>{isShown}</td>
-              <td>{reviewId}</td>
-              <td>{profileImageUrl}</td>
-              <td>{nickname}</td>
-              <td>{review}</td>
+      <MainWrapper>
+        <FlexBox>
+          <ReviewRadioSet />
+          <SearchInput id='searchKeyword' {...{ register }} search={() => {}} width='800px' />
+        </FlexBox>
+        <Table>
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Id</th>
+              <th>User Profile</th>
+              <th>Contents</th>
+              <th>Visibility</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Pagination total={mockData.totalCount} limit={10} page={page} setPage={setPage} />
-    </PageWrapper>
+          </thead>
+          <tbody>
+            {mockData.reviewList.map(({ isShown, reviewId, profileImageUrl, nickname, review }) => (
+              <tr key={reviewId}>
+                <td>{isShown}</td>
+                <td>{reviewId}</td>
+                <td>{profileImageUrl}</td>
+                <td>{nickname}</td>
+                <td>{review}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        <Pagination total={mockData.totalCount} limit={10} page={page} setPage={setPage} />
+      </MainWrapper>
+    </>
   );
 };
 
-const PageWrapper = styled.div`
-  background-color: '#f5f7fa';
+const MainWrapper = styled.div`
+  background-color: #f5f7fa;
 `;
 
 const TopWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 28px;
+  background-color: #f5f7fa;
 `;
 
 const FlexBox = styled.div`
