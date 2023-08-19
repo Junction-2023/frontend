@@ -1,4 +1,9 @@
 [[redirects]]
+  from = "/api/*"
+  to = "http://junction-f5.ap-northeast-2.elasticbeanstalk.com:8080/:splat"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
