@@ -38,8 +38,8 @@ const ReviewManagePage = () => {
               <col width='130px' />
               <col width='106px' />
               <col width='125px' />
-              <col width='480px' />
-              <col width='100px' />
+              <col width='764px' />
+              <col width='57px' />
             </colgroup>
             <thead>
               <tr>
@@ -65,9 +65,9 @@ const ReviewManagePage = () => {
                   </td>
                   <td>{content}</td>
                   <td>
-                    <div>
-                      <Checkbox id={''} />
-                    </div>
+                    <CenterDiv>
+                      <StyledCheckbox id={''} />
+                    </CenterDiv>
                   </td>
                 </tr>
               ))}
@@ -117,6 +117,16 @@ const ProfileImg = styled.img`
 const ProfileWrapper = styled.div`
   display: flex;
   gap: 6px;
+`;
+
+const CenterDiv = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  display: block;
 `;
 
 export default ReviewManagePage;

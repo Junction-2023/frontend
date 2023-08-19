@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import checkbox from '../../asset/icon/checkbox.png';
+import checkboxChecked from '../../asset/icon/checkbox_checked.png';
 
 interface CheckboxProps {
   id: string;
@@ -19,8 +21,8 @@ const Label = styled.label`
   }
 
   & input[type='checkbox']:checked + .showCheckbox {
-    background: url('https://blog.kakaocdn.net/dn/p2kpN/btrL4lwWrqf/KqNevAyZKWsoCB5ijL9qcK/img.png')
-      no-repeat;
+    background-image: url(${checkboxChecked});
+    background-repeat: no-repeat;
     background-size: contain;
   }
 
@@ -28,8 +30,8 @@ const Label = styled.label`
     width: 20px;
     height: 20px;
 
-    background: url('https://blog.kakaocdn.net/dn/bjVlZ3/btrL5bHw92G/bg8CBmi4x6zklkecdJ1dpk/img.png')
-      no-repeat;
+    background-image: url(${checkbox});
+    background-repeat: no-repeat;
     background-size: contain;
   }
 `;
