@@ -11,7 +11,7 @@ import { Subtitle1 } from '../../component/Typography/Subtitle';
 import { Title4 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { color } from '../../style/theme';
-import { ProductDetailUpdateRequest, ProductDetailResponse } from '../../types/api';
+import { ProductDetailResponse, ProductDetailUpdateRequest } from '../../types/api';
 
 interface IUpdateProductDetail {
   productId: string;
@@ -57,6 +57,7 @@ const ProductPage = () => {
               name={data?.name ?? ''}
               productCode={data?.productCode ?? ''}
               $bgColor={color.offwhite_025}
+              imgSrc={data?.productImageUrl}
             />
             <Button type='submit' size={BUTTON_SIZE.MEDIUM} variant={BUTTON_VARIANT.PRIMARY}>
               Apply

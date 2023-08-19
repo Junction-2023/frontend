@@ -5,8 +5,8 @@ import Header from './Header';
 function PageTemplate() {
   return (
     <OuterWrapper>
-      <Header />
       <BodyWrapper>
+        <Header />
         <Wrapper>
           <Outlet />
         </Wrapper>

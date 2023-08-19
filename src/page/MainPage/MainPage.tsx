@@ -100,67 +100,69 @@ const MainPage = () => {
           />
         </TopWrapper>
       </form>
-      <Table>
-        <colgroup>
-          <col />
-        </colgroup>
-        <thead>
-          <tr>
-            {tableTitles.map((title) => (
-              <th key={title}>{title}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {products.map(
-            ({
-              id: productId,
-              category,
-              subCategory,
-              name,
-              productCode,
-              price,
-              accumulatedReviews,
-              averageStarRating,
-            }) => (
-              <tr key={productId}>
-                <td>
-                  {category} / {subCategory}
-                </td>
-                <td>{productCode}</td>
-                <td>{name}</td>
-                <td>{price}</td>
-                {accumulatedReviews === undefined ? (
-                  <td></td>
-                ) : (
+      <TableWrapper>
+        <Table>
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              {tableTitles.map((title) => (
+                <th key={title}>{title}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {products.map(
+              ({
+                id: productId,
+                category,
+                subCategory,
+                name,
+                productCode,
+                price,
+                accumulatedReviews,
+                averageStarRating,
+              }) => (
+                <tr key={productId}>
                   <td>
-                    {(Math.floor(averageStarRating * 10) / 10).toFixed(1)}({accumulatedReviews}{' '}
-                    reviews)
+                    {category} / {subCategory}
                   </td>
-                )}
-                <td>
-                  <Button
-                    size={BUTTON_SIZE.SMALL}
-                    variant={BUTTON_VARIANT.TERTIARY}
-                    type='button'
-                    onClick={() => navigate(`${URL.PRODUCT}?id=${productId}`)}
-                  >
-                    <ReviewSVG />
-                  </Button>
-                  <Button
-                    size={BUTTON_SIZE.SMALL}
-                    variant={BUTTON_VARIANT.TERTIARY}
-                    type='button'
-                    onClick={() => navigate(`${URL.REVIEW_MANAGE}?id=${productId}`)}
-                  >
-                    <LayoutSVG />
-                  </Button>
-                </td>
-              </tr>
-            ),
-          )}
-        </tbody>
-      </Table>
+                  <td>{productCode}</td>
+                  <td>{name}</td>
+                  <td>{price}</td>
+                  {accumulatedReviews === undefined ? (
+                    <td></td>
+                  ) : (
+                    <td>
+                      {(Math.floor(averageStarRating * 10) / 10).toFixed(1)}({accumulatedReviews}{' '}
+                      reviews)
+                    </td>
+                  )}
+                  <td>
+                    <Button
+                      size={BUTTON_SIZE.SMALL}
+                      variant={BUTTON_VARIANT.TERTIARY}
+                      type='button'
+                      onClick={() => navigate(`${URL.PRODUCT}?id=${productId}`)}
+                    >
+                      <ReviewSVG />
+                    </Button>
+                    <Button
+                      size={BUTTON_SIZE.SMALL}
+                      variant={BUTTON_VARIANT.TERTIARY}
+                      type='button'
+                      onClick={() => navigate(`${URL.REVIEW_MANAGE}?id=${productId}`)}
+                    >
+                      <LayoutSVG />
+                    </Button>
+                  </td>
+                </tr>
+              ),
+            )}
+          </tbody>
+        </Table>
+      </TableWrapper>
       <Pagination
         total={totalCount}
         limit={10}
@@ -227,3 +229,7 @@ const LayoutSVG = () => (
     />
   </svg>
 );
+
+const TableWrapper = styled.div`
+  margin: 0 32px;
+`;
