@@ -61,7 +61,7 @@ const MainPage = () => {
                 ))}
             </Select>
           </SelectListWrap>
-          <SearchInput id='productId' {...{ register }} search={() => {}} width='740px' isDark />
+          <SearchInput id='productId' {...{ register }} search={() => {}} width='740px' $isDark />
         </TopWrapper>
       </form>
       <Table>
