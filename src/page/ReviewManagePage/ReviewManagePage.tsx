@@ -7,6 +7,7 @@ import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
 import ProductDetail from '../../component/ProductDetail';
 import { Title2 } from '../../component/Typography/Title';
+import { Select } from '../../style/input';
 import { Table } from '../../style/table';
 import ReviewRadioSet from './RadioInputSet';
 import mockData from './mock.json';
@@ -30,7 +31,18 @@ const ReviewManagePage = () => {
       <MainWrapper>
         <FlexBox>
           <ReviewRadioSet />
-          <SearchInput id='searchKeyword' {...{ register }} search={() => {}} width='800px' />
+          <SearchWrapper>
+            <Select {...register('filter')} width='110px' $isDark={false}>
+              {['Keyword', 'Content'].map((value) => {
+                return (
+                  <option value={value} key={value}>
+                    {value}
+                  </option>
+                );
+              })}
+            </Select>
+            <SearchInput id='searchKeyword' {...{ register }} search={() => {}} width='800px' />
+          </SearchWrapper>
         </FlexBox>
         <TableWrapper>
           <Table>
@@ -127,6 +139,11 @@ const CenterDiv = styled.div`
 
 const StyledCheckbox = styled(Checkbox)`
   display: block;
+`;
+
+const SearchWrapper = styled.div`
+  display: flex;
+  gap: 4px;
 `;
 
 export default ReviewManagePage;

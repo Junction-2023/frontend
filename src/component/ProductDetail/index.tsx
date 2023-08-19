@@ -7,11 +7,12 @@ interface ProductDetailProps {
   name: string;
   productCode: string;
   imgSrc?: string;
+  $bgColor?: string;
 }
 
-const ProductDetail = ({ name, productCode, imgSrc }: ProductDetailProps) => {
+const ProductDetail = ({ name, productCode, imgSrc, $bgColor = 'white' }: ProductDetailProps) => {
   return (
-    <FlexBox>
+    <FlexBox $bgColor={$bgColor}>
       <ImageWrapper>
         <Image src={imgSrc ?? productImg} alt='profile' />
       </ImageWrapper>
@@ -22,6 +23,13 @@ const ProductDetail = ({ name, productCode, imgSrc }: ProductDetailProps) => {
     </FlexBox>
   );
 };
+
+const FlexBox = styled.div<{ $bgColor: string }>`
+  display: flex;
+  gap: 12px;
+  padding: 40px 32px;
+  background-color: $bgColor;
+`;
 
 const ImageWrapper = styled.div`
   width: 56px;
@@ -34,13 +42,6 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`;
-
-const FlexBox = styled.div`
-  display: flex;
-  gap: 12px;
-  padding: 40px 32px;
-  background-color: white;
 `;
 
 const ColumnBox = styled.div`

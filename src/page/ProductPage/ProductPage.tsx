@@ -1,10 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { getProductDetail, patchProductDetail } from '../../api/wrapper';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
+import Radio from '../../component/Input/Radio';
+import ProductDetail from '../../component/ProductDetail';
 import { InputWrap, Select } from '../../style/input';
+import { color } from '../../style/theme';
 import { ProductDetailUpdateRequest, ProductListItemResponse } from '../../types/api';
 
 interface IUpdateProductDetail {
@@ -15,6 +18,7 @@ interface IUpdateProductDetail {
 const ProductPage = () => {
   const { register, handleSubmit, watch } = useForm();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const productId = searchParams.get('id');
   const { data, refetch } = useQuery<ProductListItemResponse>(['product', productId], () =>
     getProductDetail(productId!!),
@@ -46,39 +50,42 @@ const ProductPage = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <FlexBox>
         <div>
-          <h2>
-            {data?.name} {data?.productCode}
-          </h2>
-          <h3>Display Information</h3>
-          <GridBox>
-            {data?.displayOptions?.map((option, index) => (
-              <label key={index}>
-                <input
-                  type='checkbox'
-                  {...register(`options.option${index}`)}
+          <ProductDetail
+            name={data?.name ?? ''}
+            productCode={data?.productCode ?? ''}
+            $bgColor={color.offwhite_025}
+          />
+          <InnerWrap>
+            <h3>Display Information</h3>
+            <GridBox>
+              {data?.displayOptions?.map((option, index) => (
+                <Radio
+                  label={option.optionName}
+                  id={`options.option${index}`}
+                  key={option.id}
+                  register={register}
                   defaultChecked={option.isActive}
                 />
-                {option.optionName}
-              </label>
-            ))}
-          </GridBox>
-          <InputWrap>
+              ))}
+            </GridBox>
+          </InnerWrap>
+          <InnerWrap>
             <div>
-              <h3>Display Review Count</h3>
-              <Select
-                {...register('displayReviewCount', { valueAsNumber: true })}
-                defaultValue={data?.displayReviewCount}
-              >
-                {[1, 5, 10].map((value) => {
-                  return (
-                    <option value={value} key={value}>
-                      {value}
-                    </option>
-                  );
-                })}
-              </Select>
-            </div>
-            <div>
+              <InputWrap>
+                <h3>Display Review Count</h3>
+                <Select
+                  {...register('displayReviewCount', { valueAsNumber: true })}
+                  defaultValue={data?.displayReviewCount}
+                >
+                  {[1, 5, 10].map((value) => {
+                    return (
+                      <option value={value} key={value}>
+                        {value}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </InputWrap>
               <h3>Display Time</h3>
               <Select
                 {...register('displayTime', { valueAsNumber: true })}
@@ -93,7 +100,7 @@ const ProductPage = () => {
                 })}
               </Select>
             </div>
-          </InputWrap>
+          </InnerWrap>
         </div>
         <div>Preview</div>
       </FlexBox>
@@ -125,6 +132,12 @@ const FixedBox = styled.div`
   justify-content: right;
   padding: 10px;
   box-shadow: 0px -4px 20px 0px rgba(0, 0, 0, 0.05);
+`;
+
+const InnerWrap = styled.div`
+  background-color: ${({ theme }) => theme.color.white};
+  padding: 28px;
+  border-radius: 4px;
 `;
 
 export default ProductPage;
