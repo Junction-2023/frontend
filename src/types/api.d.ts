@@ -80,7 +80,7 @@ export interface ReviewDetail {
   profileImageUrl: string;
   userName: string;
   content: string;
-  reviewDate: string;
+  reviewDate: string[];
   imageUrls: string[];
   visible: boolean;
 }

@@ -1,11 +1,14 @@
-import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import API_URL from '../../constant/API_URL';
-import { getProductReviews, getProductReviewsSummary } from '../../api/wrapper';
-import { useProductDetail } from '../../hooks/use-product-detail';
-import { ProductReviewSummary } from './ProductReviewSummary';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { getProductReviews, getProductReviewsSummary } from '../../api/wrapper';
+import { Subtitle1 } from '../../component/Typography/Subtitle';
+import { Title3 } from '../../component/Typography/Title';
+import API_URL from '../../constant/API_URL';
+import { useProductDetail } from '../../hooks/use-product-detail';
 import { ProductReview } from './ProductReview';
+import { ProductReviewSummary } from './ProductReviewSummary';
 
 export const ProductReviewPage = () => {
   const { productId } = useParams();
@@ -34,7 +37,9 @@ export const ProductReviewPage = () => {
 
   return (
     <>
-      <h1>{productData?.name}</h1>
+      <HeadWrap>
+        <Title3 $isBold>{productData?.name}</Title3>
+      </HeadWrap>
       {reviewSummaryData === undefined ? (
         ''
       ) : (
@@ -43,12 +48,38 @@ export const ProductReviewPage = () => {
           reviewSummaries={reviewSummaryData.reviewSummaries}
         />
       )}
-      <div>Review ({reviewsData?.totalCount})</div>
-      <hr></hr>
+      <ReviewTitle>
+        <Subtitle1 $isBold>
+          Review <GrayText>({reviewsData?.totalCount})</GrayText>
+        </Subtitle1>
+      </ReviewTitle>
 
-      {reviewsData?.reviews.map((review) => {
-        return <ProductReview review={review} />;
-      })}
+      <ReviewWrap>
+        {reviewsData?.reviews.map((review) => {
+          return <ProductReview review={review} key={review.id} />;
+        })}
+      </ReviewWrap>
     </>
   );
 };
+
+const HeadWrap = styled.div`
+  padding: 32px 20px 0px;
+`;
+
+const GrayText = styled.span`
+  color: #adb1ba;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.2px;
+`;
+
+const ReviewTitle = styled.div`
+  margin-left: 20px;
+`;
+
+const ReviewWrap = styled.div`
+  margin: 0 0 28px 20px;
+`;
