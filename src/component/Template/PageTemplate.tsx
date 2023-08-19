@@ -1,14 +1,19 @@
 import { Outlet } from 'react-router-dom';
-import { Header } from './Header';
+import styled from 'styled-components';
 
 function PageTemplate() {
   return (
     <>
-      <Header />
       <main>
-        <Outlet />
+        <Wrapper>
+          <Outlet />
+        </Wrapper>
       </main>
     </>
   );
 }
+
+const Wrapper = styled.main`
+  width: 1280px;
+`;
 export default PageTemplate;

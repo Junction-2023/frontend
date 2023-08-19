@@ -5,7 +5,7 @@ import { styled } from 'styled-components';
 import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
 import URL from '../../constant/URL';
-import { InputWrap, Select } from '../../style/input';
+import { Select } from '../../style/input';
 import categoryList from './category.json';
 import mockData from './mock.json';
 
@@ -25,7 +25,7 @@ const MainPage = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TopWrapper>
-          <InputWrap>
+          <SelectListWrap>
             <Select
               id='category'
               width='146px'
@@ -33,7 +33,7 @@ const MainPage = () => {
                 setCategory(e.target.value);
               }}
             >
-              <option value=''>선택</option>
+              <option value=''>Main Category</option>
               {categoryList.map((e) => (
                 <option key={e.name} value={e.name}>
                   {e.name}
@@ -48,7 +48,7 @@ const MainPage = () => {
               }}
               disabled={category === ''}
             >
-              <option value=''>선택</option>
+              <option value=''>Sub Category</option>
               {categoryList
                 .find((e) => e.name === category)
                 ?.subCategoryList.map((e) => (
@@ -57,17 +57,23 @@ const MainPage = () => {
                   </option>
                 ))}
             </Select>
-          </InputWrap>
-          <SearchInput id='productId' {...{ register }} search={() => {}} width='200px' />
+          </SelectListWrap>
+          <SearchInput
+            id='productId'
+            {...{ register }}
+            search={() => {}}
+            width='740px'
+            placeHolder='Search'
+          />
         </TopWrapper>
       </form>
       <Table>
         <thead>
           <tr>
-            <th>카테고리</th>
-            <th>상품명</th>
-            <th>상품번호</th>
-            <th>가격</th>
+            <th>Category</th>
+            <th>Product Number</th>
+            <th>Item</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
@@ -90,8 +96,15 @@ const MainPage = () => {
 
 const TopWrapper = styled.div`
   display: flex;
+  height: 148px;
+  padding: 84px 32px 24px;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.color.black};
+`;
+
+const SelectListWrap = styled.div`
+  display: flex;
+  gap: 8px;
 `;
 
 const Table = styled.table`

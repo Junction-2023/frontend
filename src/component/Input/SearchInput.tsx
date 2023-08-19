@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useState } from 'react';
 import { FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
-import searchIcon20 from '../../asset/icon/search_icon_black.png';
+import searchIcon20 from '../../asset/icon/search.png';
 import { CallBackFunction } from '../../types/common';
 
 type SearchInputType = {
@@ -63,19 +63,32 @@ function SearchInput({
 
 const SearchInputBox = styled.div<{ width?: string }>`
   display: flex;
+  align-items: center;
   border: 1px solid #000;
   width: ${(props) => props.width ?? '100%'};
+  background-color: ${({ theme }) => theme.color.gray_800};
+  border-radius: 4px;
+  padding: 16px 12px;
 `;
 
 const Input = styled.input`
   width: 100%;
+  color: ${({ theme }) => theme.color.gray_400};
+  background-color: ${({ theme }) => theme.color.gray_800};
+  outline: 0;
+  font-size: 16px;
+  font-weight: 500;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.color.gray_600};
+  }
 `;
 
 const SearchIcon = styled.span`
   width: 20px;
   height: 20px;
-  margin-right: 0;
-  background-color: #fff;
+  margin-right: 8px;
+  background-color: ${({ theme }) => theme.color.gray_800};
   background-image: url(${searchIcon20});
   background-repeat: no-repeat;
   background-position: center;

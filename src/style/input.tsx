@@ -19,6 +19,7 @@ export const Select = styled.select<{ width?: string }>`
   background-color: ${({ theme }) => theme.color.gray_800};
   color: ${({ theme }) => theme.color.gray_200};
   border-radius: 4px;
+  border: 0;
 
   &:disabled {
     background-color: ${({ theme }) => theme.color.gray_800};
