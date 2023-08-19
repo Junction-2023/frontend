@@ -1,0 +1,24 @@
+{
+  "reviewList": [
+    {
+      "id": 0,
+      "profileImageUrl": "111",
+      "userName": "111",
+      "content": "111",
+      "reviewDate": "111",
+      "imageUrls": ["imageUrl1", "imageUrl2", "imageUrl3"],
+      "visible": true
+    },
+    {
+      "id": 1,
+      "profileImageUrl": "111",
+      "userName": "111",
+      "content": "111",
+      "reviewDate": "111",
+      "imageUrls": ["imageUrl1", "imageUrl2", "imageUrl3"],
+      "visible": true
+    }
+  ],
+  "totalCount": 50,
+  "totalPage": 10
+}

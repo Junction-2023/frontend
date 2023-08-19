@@ -19,18 +19,12 @@
   font-weight: 400;
   letter-spacing: -0.0125rem;
 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #000;
+  background-color: #fff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-@media screen and (max-width: 660px) {
-  html {
-    font-size: 10px;
-  }
 }

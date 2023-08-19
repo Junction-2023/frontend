@@ -27,19 +27,16 @@ const sizes = {
   [BUTTON_SIZE.LARGE]: {
     width: '12.5rem',
     height: '3.5rem',
-    padding: '1rem 2.5rem',
     fontSize: '1rem',
   },
   [BUTTON_SIZE.MEDIUM]: {
     width: '10rem',
     height: '3rem',
-    padding: '0.75rem 2.25rem',
     fontSize: '0.875rem',
   },
   [BUTTON_SIZE.SMALL]: {
     width: '5.75rem',
     height: '2.125rem',
-    padding: '0.5rem 1rem',
     fontSize: '0.75rem',
   },
 };
@@ -141,7 +138,6 @@ export const Button = styled.button<ButtonProps>`
   line-height: '150%';
   width: ${({ size }: ButtonProps) => `${sizes[size].width}`};
   height: ${({ size }: ButtonProps) => `${sizes[size].height}`};
-  padding: ${({ size }: ButtonProps) => `${sizes[size].padding}`};
   font-size: ${({ size }: ButtonProps) => `${sizes[size].fontSize}`};
   background-color: ${({ variant }: ButtonProps) => `${variants[variant].default.backgroundColor}`};
   color: ${({ variant }: ButtonProps) => `${variants[variant].default.color}`};
