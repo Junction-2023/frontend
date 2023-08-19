@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useMutation, useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { getProductDetail, getProductReviews, patchProductReview } from '../../api/wrapper';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import Checkbox from '../../component/Input/Checkbox';
 import SearchInput from '../../component/Input/SearchInput';
@@ -10,10 +12,8 @@ import ProductDetail from '../../component/ProductDetail';
 import { Title2 } from '../../component/Typography/Title';
 import { Select } from '../../style/input';
 import { Table } from '../../style/table';
+import { ReviewListRequest, ReviewUpdateRequest } from '../../types/api';
 import ReviewRadioSet from './RadioInputSet';
-import { useMutation, useQuery } from 'react-query';
-import { ReviewUpdateRequest } from '../../types/api';
-import { getProductDetail, getProductReviews, patchProductReview } from '../../api/wrapper';
 
 interface IUpdateProductReview {
   productId: string;
@@ -33,15 +33,18 @@ const ReviewManagePage = () => {
     return getProductDetail(productId!!);
   });
 
-  const { data: searchData, refetch } = useQuery(['productSearchs', productId, option, searchKeyword, filterType, page], () => {
-    return getProductReviews(productId!!, {
-      keyword: searchKeyword,
-      type: filterType,
-      isVisible: option === 'option1',
-      page: page - 1,
-      size: 10
-    });
-  });
+  const { data: searchData, refetch } = useQuery(
+    ['productSearchs', productId, option, searchKeyword, filterType, page],
+    () => {
+      return getProductReviews(productId!!, {
+        keyword: searchKeyword,
+        type: filterType,
+        isVisible: option === 'option1',
+        page: page - 1,
+        size: 10,
+      } as ReviewListRequest);
+    },
+  );
 
   const { mutate } = useMutation(
     ({ productId, data }: IUpdateProductReview) => {
@@ -50,17 +53,21 @@ const ReviewManagePage = () => {
     {
       onSuccess: () => {
         refetch();
-      }
-    }
+      },
+    },
   );
 
   const onSubmit = async (data: FieldValues) => {
-    const ids = data.checkBox.filter((value: string | boolean) => {
-      return value !== false && typeof value === 'string';
-    }).map((value: string) => {return parseInt(value.split('.')[1]);})
+    const ids = data.checkBox
+      .filter((value: string | boolean) => {
+        return value !== false && typeof value === 'string';
+      })
+      .map((value: string) => {
+        return parseInt(value.split('.')[1]);
+      });
 
-    mutate({ productId: productId!!, data: { reviewIds: ids ?? [] } })
-  }
+    mutate({ productId: productId!!, data: { reviewIds: ids ?? [] } });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -77,7 +84,7 @@ const ReviewManagePage = () => {
       </TopWrapper>
       <MainWrapper>
         <FlexBox>
-          <ReviewRadioSet register={register}/>
+          <ReviewRadioSet register={register} />
           <SearchWrapper>
             <Select {...register('filter')} width='110px' $isDark={false}>
               {['USERNAME', 'CONTENT'].map((value) => {
@@ -110,7 +117,7 @@ const ReviewManagePage = () => {
               </tr>
             </thead>
             <tbody>
-              {searchData?.reviews.map(({id, profileImageUrl, userName, content, visible }) => (
+              {searchData?.reviews.map(({ id, profileImageUrl, userName, content, visible }) => (
                 <tr key={id}>
                   <td>{visible ? 'On' : 'Off'}</td>
                   <td>{id}</td>
@@ -125,7 +132,7 @@ const ReviewManagePage = () => {
                   <td>{content}</td>
                   <td>
                     <CenterDiv>
-                      <StyledCheckbox id={`checkBox.${id}`} register={register}/>
+                      <StyledCheckbox id={`checkBox.${id}`} register={register} />
                     </CenterDiv>
                   </td>
                 </tr>
