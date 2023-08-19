@@ -78,7 +78,7 @@ const MainPage = () => {
         </thead>
         <tbody>
           {mockData.products.map(({ id, category, subCategory, name, productCode, price }) => (
-            <tr key={id} onClick={() => navigate(`${URL.PRODUCT}?code=${productCode}`)}>
+            <tr key={id} onClick={() => navigate(`${URL.PRODUCT}?id=${id}`)}>
               <td>
                 {category} / {subCategory}
               </td>

@@ -9,7 +9,7 @@ import mockData from './mock.json';
 const ProductPage = () => {
   const { register, handleSubmit, getValues } = useForm();
   const [searchParams] = useSearchParams();
-  const productCode = searchParams.get('code');
+  const productId = searchParams.get('id');
   const navigate = useNavigate();
   // const { data } = useQuery(['product', productCode]);
   const onSubmit = () => {
@@ -101,7 +101,7 @@ const ProductPage = () => {
             size={BUTTON_SIZE.MEDIUM}
             variant={BUTTON_VARIANT.PRIMARY}
             type='button'
-            onClick={() => navigate(`${URL.REVIEW_MANAGE}?code=${productCode}`)}
+            onClick={() => navigate(`${URL.REVIEW_MANAGE}?id=${productId}`)}
           >
             미노출 리뷰 설정하기
           </Button>
