@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
-import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import SearchInput from '../../component/Input/SearchInput';
 import SelectInput from '../../component/Input/SelectInput';
 import { InputBox, InputWrap } from '../../style/input';
+import mockData from './mock.json';
 
 const MainPage = () => {
   const { register } = useForm();
@@ -27,10 +27,21 @@ const MainPage = () => {
         </InputBox>
       </InputWrap>
 
-      <Text>안녕하세요</Text>
-      <Button size={BUTTON_SIZE.LARGE} variant={BUTTON_VARIANT.OUTLINED}>
-        안녕
-      </Button>
+      <table>
+        <th>카테고리</th>
+        <th>상품명</th>
+        <th>상품번호</th>
+        <th>가격</th>
+
+        {mockData.map(({ category, productName, productId, price }) => (
+          <tr>
+            <td>{category}</td>
+            <td>{productName}</td>
+            <td>{productId}</td>
+            <td>{price}</td>
+          </tr>
+        ))}
+      </table>
     </>
   );
 };
