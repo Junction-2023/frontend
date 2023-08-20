@@ -43,6 +43,7 @@ const Nav = styled.nav`
   align-items: center;
   gap: 8px;
   margin: 16px;
+  padding-bottom: 40px;
 `;
 
 const ArrowButton = styled.button`

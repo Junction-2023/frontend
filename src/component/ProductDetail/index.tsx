@@ -28,7 +28,7 @@ const FlexBox = styled.div<{ $bgColor: string }>`
   display: flex;
   gap: 12px;
   padding: 40px 32px;
-  background-color: $bgColor;
+  background-color: ${(props) => props.$bgColor};
 `;
 
 const ImageWrapper = styled.div`

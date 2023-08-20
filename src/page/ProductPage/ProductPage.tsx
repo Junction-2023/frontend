@@ -56,7 +56,6 @@ const ProductPage = () => {
   };
 
   const getImgSrc = () => {
-    console.log(selectedDisplayOption);
     if (selectedDisplayOption === '0') return TotalSalesPreview;
     else if (selectedDisplayOption === '1') return NowWatchingPreview;
     else if (selectedDisplayOption === '2') return AverageStarRating;
@@ -78,7 +77,7 @@ const ProductPage = () => {
       }}
     >
       <FlexBox>
-        <div>
+        <ColumnInnerWrap>
           <TopWrapper>
             <ProductDetail
               name={data?.name ?? ''}
@@ -113,6 +112,7 @@ const ProductPage = () => {
                   {...register('displayReviewCount', { valueAsNumber: true })}
                   defaultValue={data?.displayReviewCount}
                   width='364px'
+                  disabled={selectedDisplayOption !== '4'}
                 >
                   {[1, 5, 10].map((value) => {
                     return (
@@ -129,6 +129,7 @@ const ProductPage = () => {
                   {...register('displayTime', { valueAsNumber: true })}
                   defaultValue={data?.displayTime}
                   width='364px'
+                  disabled={selectedDisplayOption !== '4'}
                 >
                   {[-1, 5, 10].map((value) => {
                     return (
@@ -141,7 +142,7 @@ const ProductPage = () => {
               </ColumnBox>
             </InputWrap>
           </InnerWrap>
-        </div>
+        </ColumnInnerWrap>
         <RightWrapper>
           <Title4 $isBold>Preview</Title4>
           <PreviewWrapper>
@@ -173,12 +174,20 @@ const GridBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 24px;
+  row-gap: 10px;
 `;
 
 const InnerWrap = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   padding: 28px;
   border-radius: 4px;
+  margin: 0 35px 0 32px;
+`;
+
+const ColumnInnerWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 const ColumnBox = styled.div`
