@@ -48,10 +48,7 @@ const ProductPage = () => {
 
   const onSubmit = async () => {
     const requestBody = {
-      selectedOptionIds:
-        data?.displayOptions
-          ?.filter((_, index) => watch(`options.option${index}`))
-          .map((option) => option.id) ?? [],
+      selectedOptionIds: [parseInt(selectedDisplayOption)],
       displayReviewCount: watch('displayReviewCount'),
       displayTime: watch('displayTime'),
     };
