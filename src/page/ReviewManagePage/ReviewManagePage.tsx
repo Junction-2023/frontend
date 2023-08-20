@@ -88,10 +88,13 @@ const ReviewManagePage = () => {
           <ReviewRadioSet register={register} />
           <SearchWrapper>
             <Select {...register('filter')} width='110px' height='48px' $isDark={false}>
-              {['USERNAME', 'CONTENT'].map((value) => {
+              {[
+                { name: 'User Name', value: 'USERNAME' },
+                { name: 'Content', value: 'CONTENT' },
+              ].map(({ name, value }) => {
                 return (
                   <option value={value} key={value}>
-                    {value}
+                    {name}
                   </option>
                 );
               })}

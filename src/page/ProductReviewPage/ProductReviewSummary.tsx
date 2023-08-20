@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import star from '../../asset/icon/star.png';
 import starFilled from '../../asset/icon/star_filled.png';
@@ -16,9 +15,6 @@ export const ProductReviewSummary = ({ reviewSummaries }: Props) => {
         reviewSummaries.reduce((prev, curr) => prev + curr.count, 0)) *
         10,
     ) / 10;
-  useEffect(() => {
-    console.log(score);
-  }, [score]);
   return (
     <ReviewSummaryDouble>
       <ReviewSummaryLeft>
@@ -35,8 +31,8 @@ export const ProductReviewSummary = ({ reviewSummaries }: Props) => {
           ))}
       </ReviewSummaryLeft>
       <ReviewSummaryRight>
-        {reviewSummaries.map((e) => (
-          <FlexBox>
+        {reviewSummaries.map((e, idx) => (
+          <FlexBox key={e.rating + e.count + idx}>
             {((Math.floor(e.rating) * 10) / 10).toFixed(1)}
             <OuterGage>
               <InnerGage
@@ -48,7 +44,7 @@ export const ProductReviewSummary = ({ reviewSummaries }: Props) => {
                 }}
               />
             </OuterGage>
-            {e.count}
+            <div style={{ textAlign: 'right' }}>{e.count}</div>
           </FlexBox>
         ))}
       </ReviewSummaryRight>
@@ -87,6 +83,8 @@ const OuterGage = styled.div`
   width: 127px;
   height: 8px;
   background-color: white;
+  height: 8px;
+  border-radius: 4px;
 `;
 
 const InnerGage = styled.div`
@@ -94,4 +92,6 @@ const InnerGage = styled.div`
   width: 127px;
   height: 8px;
   background-color: #6143ff;
+  height: 8px;
+  border-radius: 4px;
 `;
