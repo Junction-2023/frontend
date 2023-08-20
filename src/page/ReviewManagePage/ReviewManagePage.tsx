@@ -75,6 +75,7 @@ const ReviewManagePage = () => {
         name={data?.name ?? ''}
         productCode={data?.productCode ?? ''}
         imgSrc={data?.productImageUrl}
+        // $bgColor='white'
       />
       <TopWrapper>
         <Title2 $isBold>Review Management</Title2>
@@ -86,7 +87,7 @@ const ReviewManagePage = () => {
         <FlexBox>
           <ReviewRadioSet register={register} />
           <SearchWrapper>
-            <Select {...register('filter')} width='110px' $isDark={false}>
+            <Select {...register('filter')} width='110px' height='48px' $isDark={false}>
               {['USERNAME', 'CONTENT'].map((value) => {
                 return (
                   <option value={value} key={value}>
@@ -95,7 +96,13 @@ const ReviewManagePage = () => {
                 );
               })}
             </Select>
-            <SearchInput id='searchKeyword' {...{ register }} search={() => {}} width='800px' />
+            <SearchInput
+              id='searchKeyword'
+              {...{ register }}
+              search={() => {}}
+              width='800px'
+              height='48px'
+            />
           </SearchWrapper>
         </FlexBox>
         <TableWrapper>
@@ -109,7 +116,7 @@ const ReviewManagePage = () => {
             </colgroup>
             <thead>
               <tr>
-                <th>Status</th>
+                <th style={{ textAlign: 'center' }}>Status</th>
                 <th>Id</th>
                 <th>User Profile</th>
                 <th>Contents</th>
@@ -119,7 +126,7 @@ const ReviewManagePage = () => {
             <tbody>
               {searchData?.reviews.map(({ id, profileImageUrl, userName, content, visible }) => (
                 <tr key={id}>
-                  <td>{visible ? 'On' : 'Off'}</td>
+                  <td style={{ textAlign: 'center' }}>{visible ? 'On' : 'Off'}</td>
                   <td>{id}</td>
                   <td>
                     <ProfileWrapper>

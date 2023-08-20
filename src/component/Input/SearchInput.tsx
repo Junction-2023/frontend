@@ -15,6 +15,7 @@ type SearchInputType = {
   disabled?: boolean;
   required?: boolean;
   width?: string;
+  height?: string;
   $isDark?: boolean;
 };
 
@@ -28,6 +29,7 @@ function SearchInput({
   defaultValue,
   disabled,
   width,
+  height,
   $isDark = false,
 }: SearchInputType) {
   const [searchValue, setSearchValue] = useState('');
@@ -41,7 +43,7 @@ function SearchInput({
   };
 
   return (
-    <SearchInputBox width={width} $isDark={$isDark}>
+    <SearchInputBox width={width} height={height} $isDark={$isDark}>
       <SearchIcon $isDark={$isDark} />
       <Input
         type='text'
@@ -63,12 +65,12 @@ function SearchInput({
   );
 }
 
-const SearchInputBox = styled.div<{ width?: string; $isDark: boolean }>`
+const SearchInputBox = styled.div<{ width?: string; height?: string; $isDark: boolean }>`
   display: flex;
   align-items: center;
   border: ${(props) => (props.$isDark ? '' : '1px solid #EAEBEE')};
   width: ${(props) => props.width ?? '100%'};
-  height: 40px;
+  height: ${(props) => props.height ?? '40px'};
   color: ${(props) => (props.$isDark ? '#D1D3D8' : '#212124')};
   background-color: ${(props) => (props.$isDark ? '#393A40' : '#FFF')};
   border-radius: 4px;

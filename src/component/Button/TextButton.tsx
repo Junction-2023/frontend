@@ -10,6 +10,7 @@ export const BUTTON_SIZE = {
   LARGE: 'large',
   MEDIUM: 'medium',
   SMALL: 'small',
+  ICON: 'icon',
 } as const;
 
 export type ButtonSize = (typeof BUTTON_SIZE)[keyof typeof BUTTON_SIZE];
@@ -37,6 +38,11 @@ const sizes = {
   [BUTTON_SIZE.SMALL]: {
     width: '5.75rem',
     height: '2.125rem',
+    fontSize: '0.75rem',
+  },
+  [BUTTON_SIZE.ICON]: {
+    width: '2.25rem',
+    height: '2.25rem',
     fontSize: '0.75rem',
   },
 };

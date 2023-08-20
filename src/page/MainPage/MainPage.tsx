@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { getCategories, getProductList } from '../../api/wrapper';
+import star from '../../asset/icon/star_filled.png';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import SearchInput from '../../component/Input/SearchInput';
 import Pagination from '../../component/Pagination';
@@ -11,7 +12,6 @@ import API_URL from '../../constant/API_URL';
 import URL from '../../constant/URL';
 import { Select } from '../../style/input';
 import { Table } from '../../style/table';
-
 const MainPage = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -123,39 +123,62 @@ const MainPage = () => {
                 price,
                 accumulatedReviews,
                 averageStarRating,
+                productImageUrl,
               }) => (
                 <tr key={productId}>
                   <td>
                     {category} / {subCategory}
                   </td>
                   <td>{productCode}</td>
-                  <td>{name}</td>
+                  <td>
+                    <ProfileWrapper>
+                      <ProfileImgWrapper>
+                        <StyledImg src={productImageUrl} alt='' />
+                      </ProfileImgWrapper>
+                      <DetailWrapper>
+                        <div>{name}</div>
+                      </DetailWrapper>
+                    </ProfileWrapper>
+                  </td>
                   <td>{price}</td>
                   {accumulatedReviews === undefined ? (
                     <td></td>
                   ) : (
                     <td>
-                      {(Math.floor(averageStarRating * 10) / 10).toFixed(1)}({accumulatedReviews}{' '}
-                      reviews)
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '2px',
+                        }}
+                      >
+                        <img src={star} />
+                        {(Math.floor(averageStarRating * 10) / 10).toFixed(1)}({accumulatedReviews}{' '}
+                        reviews)
+                      </div>
                     </td>
                   )}
                   <td>
-                    <Button
-                      size={BUTTON_SIZE.SMALL}
-                      variant={BUTTON_VARIANT.TERTIARY}
-                      type='button'
-                      onClick={() => navigate(`${URL.PRODUCT}?id=${productId}`)}
-                    >
-                      <ReviewSVG />
-                    </Button>
-                    <Button
-                      size={BUTTON_SIZE.SMALL}
-                      variant={BUTTON_VARIANT.TERTIARY}
-                      type='button'
-                      onClick={() => navigate(`${URL.REVIEW_MANAGE}?id=${productId}`)}
-                    >
-                      <LayoutSVG />
-                    </Button>
+                    <ButtonWrapper>
+                      <Button
+                        size={BUTTON_SIZE.ICON}
+                        variant={BUTTON_VARIANT.TERTIARY}
+                        type='button'
+                        onClick={() => navigate(`${URL.PRODUCT}?id=${productId}`)}
+                        title='review'
+                      >
+                        <ReviewSVG />
+                      </Button>
+                      <Button
+                        size={BUTTON_SIZE.ICON}
+                        variant={BUTTON_VARIANT.TERTIARY}
+                        type='button'
+                        onClick={() => navigate(`${URL.REVIEW_MANAGE}?id=${productId}`)}
+                        title='layout'
+                      >
+                        <LayoutSVG />
+                      </Button>
+                    </ButtonWrapper>
                   </td>
                 </tr>
               ),
@@ -175,7 +198,6 @@ const MainPage = () => {
 
 const TopWrapper = styled.div`
   display: flex;
-  height: 80px;
   padding: 0 32px 24px;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.color.black};
@@ -230,6 +252,51 @@ const LayoutSVG = () => (
   </svg>
 );
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 6px;
+`;
+
 const TableWrapper = styled.div`
   margin: 0 32px;
+`;
+
+const ProfileWrapper = styled.div`
+  display: flex;
+`;
+
+const Wrapper = styled.div`
+  padding: 24px 0;
+  border-bottom: 1px solid #f2f3f6;
+`;
+
+const ProfileImgWrapper = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 8px;
+`;
+
+const ProductImgWrapper = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const DetailWrapper = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+  gap: 4px;
 `;
