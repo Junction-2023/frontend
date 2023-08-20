@@ -1,9 +1,15 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { getProductDetail, patchProductDetail } from '../../api/wrapper';
-import preview1Img from '../../asset/image/preview1.png';
+import ReviewPreview from '../../asset/image/preview/preview1.png';
+import TotalSalesPreview from '../../asset/image/preview/preview2.png';
+import TotalAccumulationPreview from '../../asset/image/preview/preview3.png';
+import TotalPeoplePreview from '../../asset/image/preview/preview4.png';
+import NowWatchingPreview from '../../asset/image/preview/preview5.png';
+import AverageStarRating from '../../asset/image/preview/preview6.png';
 import { BUTTON_SIZE, BUTTON_VARIANT, Button } from '../../component/Button/TextButton';
 import Radio from '../../component/Input/Radio';
 import ProductDetail from '../../component/ProductDetail';
@@ -22,6 +28,7 @@ const ProductPage = () => {
   const { register, handleSubmit, watch } = useForm();
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
+
   const { data, refetch } = useQuery<ProductDetailResponse>(['product', productId], () =>
     getProductDetail(productId!!),
   );
@@ -34,6 +41,9 @@ const ProductPage = () => {
         refetch();
       },
     },
+  );
+  const [selectedDisplayOption, setSelectedDisplayOption] = useState<string>(
+    data?.displayOptions.find((e) => e.isActive)?.id.toString() ?? '',
   );
 
   const onSubmit = async () => {
@@ -48,8 +58,28 @@ const ProductPage = () => {
     mutate({ productId: productId!!, data: requestBody });
   };
 
+  const getImgSrc = () => {
+    console.log(selectedDisplayOption);
+    if (selectedDisplayOption === '0') return TotalSalesPreview;
+    else if (selectedDisplayOption === '1') return NowWatchingPreview;
+    else if (selectedDisplayOption === '2') return AverageStarRating;
+    else if (selectedDisplayOption === '3') return TotalPeoplePreview;
+    else if (selectedDisplayOption === '4') return ReviewPreview;
+    else return TotalAccumulationPreview;
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={() => {
+        const id = (
+          document.querySelector('input[name="displayOption"]:checked') as HTMLInputElement
+        )?.id
+          .split('.')[1]
+          .charAt(6);
+        setSelectedDisplayOption(id);
+      }}
+    >
       <FlexBox>
         <div>
           <TopWrapper>
@@ -118,7 +148,7 @@ const ProductPage = () => {
         <RightWrapper>
           <Title4 $isBold>Preview</Title4>
           <PreviewWrapper>
-            <img src={preview1Img} />
+            <img src={getImgSrc()} />
           </PreviewWrapper>
         </RightWrapper>
       </FlexBox>
