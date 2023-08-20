@@ -59,7 +59,6 @@ const ProductPage = () => {
   };
 
   const getImgSrc = () => {
-    console.log(selectedDisplayOption);
     if (selectedDisplayOption === '0') return TotalSalesPreview;
     else if (selectedDisplayOption === '1') return NowWatchingPreview;
     else if (selectedDisplayOption === '2') return AverageStarRating;
