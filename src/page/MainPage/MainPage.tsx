@@ -265,24 +265,12 @@ const ProfileWrapper = styled.div`
   display: flex;
 `;
 
-const Wrapper = styled.div`
-  padding: 24px 0;
-  border-bottom: 1px solid #f2f3f6;
-`;
-
 const ProfileImgWrapper = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 4px;
   overflow: hidden;
   margin-right: 8px;
-`;
-
-const ProductImgWrapper = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 4px;
-  overflow: hidden;
 `;
 
 const StyledImg = styled.img`
@@ -292,11 +280,6 @@ const StyledImg = styled.img`
 `;
 
 const DetailWrapper = styled.div`
-  display: flex;
-  gap: 4px;
-`;
-
-const FlexBox = styled.div`
   display: flex;
   gap: 4px;
 `;
